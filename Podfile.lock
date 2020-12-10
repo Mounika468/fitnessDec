@@ -93,6 +93,7 @@ PODS:
   - Stripe (19.3.0)
   - SwiftGifOrigin (1.7.0)
   - TwilioVideo (3.0.1)
+  - youtube-ios-player-helper (1.0.2)
 
 DEPENDENCIES:
   - Alamofire (= 4.9)
@@ -118,6 +119,7 @@ DEPENDENCIES:
   - Stripe (~> 19.3.0)
   - SwiftGifOrigin
   - TwilioVideo (~> 3.0.1)
+  - youtube-ios-player-helper
 
 SPEC REPOS:
   trunk:
@@ -159,6 +161,7 @@ SPEC REPOS:
     - Stripe
     - SwiftGifOrigin
     - TwilioVideo
+    - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
   Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
@@ -199,7 +202,8 @@ SPEC CHECKSUMS:
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   TwilioVideo: 569fc99e004ea82614d96e1657969dacd07aa6aa
+  youtube-ios-player-helper: 40b96e52c22445f0fdc43731cefa32c67075ff81
 
-PODFILE CHECKSUM: 615e2d3ef9b0c8220160eb4b2cc7ac0c41c5a11f
+PODFILE CHECKSUM: 8a0ebfb04c8ab3ae3371e334be8add1af7f9bb25
 
 COCOAPODS: 1.9.3

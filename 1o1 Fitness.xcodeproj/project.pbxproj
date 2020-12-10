@@ -267,6 +267,13 @@
 		6F7EBC842452EEB000453649 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7EBC832452EEB000453649 /* CustomAlertController.swift */; };
 		6F7EBC872452EFF900453649 /* FontColours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7EBC862452EFF900453649 /* FontColours.swift */; };
 		6F7EBC8A2452F2B000453649 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7EBC892452F2B000453649 /* CalenderViewController.swift */; };
+		6F808DC12580C073009AF959 /* YoutubeVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F808DC02580C073009AF959 /* YoutubeVideoVC.swift */; };
+		6F808DC62580C084009AF959 /* YoutubeVideoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F808DC52580C084009AF959 /* YoutubeVideoVC.storyboard */; };
+		6F808DFA2580E405009AF959 /* MealEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F808DF92580E405009AF959 /* MealEditViewController.swift */; };
+		6F808DFF2580E410009AF959 /* MealEditViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F808DFE2580E410009AF959 /* MealEditViewController.storyboard */; };
+		6F808E042580FA00009AF959 /* WaterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F808E032580FA00009AF959 /* WaterEditViewController.swift */; };
+		6F808E092580FA0F009AF959 /* WeightLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F808E082580FA0F009AF959 /* WeightLogViewController.swift */; };
+		6F808E0E2580FA26009AF959 /* ExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F808E0D2580FA26009AF959 /* ExercisesViewController.swift */; };
 		6F820386253A184100E4EA30 /* BMIBMRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F820385253A184100E4EA30 /* BMIBMRViewController.swift */; };
 		6F820388253A185900E4EA30 /* BMIBMRVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F820387253A185900E4EA30 /* BMIBMRVC.storyboard */; };
 		6F82038A253A1F2800E4EA30 /* HorizontalBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F820389253A1F2800E4EA30 /* HorizontalBar.swift */; };
@@ -605,6 +612,13 @@
 		6F7EBC832452EEB000453649 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		6F7EBC862452EFF900453649 /* FontColours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontColours.swift; sourceTree = "<group>"; };
 		6F7EBC892452F2B000453649 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
+		6F808DC02580C073009AF959 /* YoutubeVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideoVC.swift; sourceTree = "<group>"; };
+		6F808DC52580C084009AF959 /* YoutubeVideoVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = YoutubeVideoVC.storyboard; sourceTree = "<group>"; };
+		6F808DF92580E405009AF959 /* MealEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditViewController.swift; sourceTree = "<group>"; };
+		6F808DFE2580E410009AF959 /* MealEditViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MealEditViewController.storyboard; sourceTree = "<group>"; };
+		6F808E032580FA00009AF959 /* WaterEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterEditViewController.swift; sourceTree = "<group>"; };
+		6F808E082580FA0F009AF959 /* WeightLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightLogViewController.swift; sourceTree = "<group>"; };
+		6F808E0D2580FA26009AF959 /* ExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewController.swift; sourceTree = "<group>"; };
 		6F820385253A184100E4EA30 /* BMIBMRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMIBMRViewController.swift; sourceTree = "<group>"; };
 		6F820387253A185900E4EA30 /* BMIBMRVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BMIBMRVC.storyboard; sourceTree = "<group>"; };
 		6F820389253A1F2800E4EA30 /* HorizontalBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalBar.swift; sourceTree = "<group>"; };
@@ -722,6 +736,11 @@
 				6F5EF97E2579478C00B3C3EA /* ContactUsViewController.swift */,
 				6F5EF983257A0B9E00B3C3EA /* ContactTableViewCell.swift */,
 				6F5EF988257A0C1500B3C3EA /* ContactCommentsViewController.swift */,
+				6F808DF92580E405009AF959 /* MealEditViewController.swift */,
+				6F808DFE2580E410009AF959 /* MealEditViewController.storyboard */,
+				6F808E032580FA00009AF959 /* WaterEditViewController.swift */,
+				6F808E082580FA0F009AF959 /* WeightLogViewController.swift */,
+				6F808E0D2580FA26009AF959 /* ExercisesViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1132,6 +1151,8 @@
 				6F820385253A184100E4EA30 /* BMIBMRViewController.swift */,
 				6F820387253A185900E4EA30 /* BMIBMRVC.storyboard */,
 				6F820389253A1F2800E4EA30 /* HorizontalBar.swift */,
+				6F808DC02580C073009AF959 /* YoutubeVideoVC.swift */,
+				6F808DC52580C084009AF959 /* YoutubeVideoVC.storyboard */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1411,6 +1432,7 @@
 				6F2DAE2424F639D5007B49EF /* ScheduleCallView.xib in Resources */,
 				6F1BEFF724E5B3D800068BBB /* TwilioCallViewController.storyboard in Resources */,
 				6F7EBC642450A1D100453649 /* latoregular.ttf in Resources */,
+				6F808DC62580C084009AF959 /* YoutubeVideoVC.storyboard in Resources */,
 				6F31194D24739C2A00E4CE17 /* DietListHeader.xib in Resources */,
 				6F434F1B2456F7E60054642B /* TrainerProfileView.xib in Resources */,
 				6F3D7F9B24601AEB0065170D /* StartVC.storyboard in Resources */,
@@ -1480,6 +1502,7 @@
 				6F311931246E9A0F00E4CE17 /* WorkOutTypeTableViewCell.xib in Resources */,
 				6F7AD607254AB224000EE822 /* ProgramDetailsViewController.storyboard in Resources */,
 				6F1A062224DEA6CE00732E56 /* TimePickerVC.storyboard in Resources */,
+				6F808DFF2580E410009AF959 /* MealEditViewController.storyboard in Resources */,
 				6F31195624739C2A00E4CE17 /* Water.storyboard in Resources */,
 				6F9368122462B798007656D2 /* BorderCellTableViewCell.xib in Resources */,
 				6F93681B2462B8F8007656D2 /* PrimaryGoal.storyboard in Resources */,
@@ -1673,6 +1696,7 @@
 				6F1E82BA247E69CA009B47F0 /* RestTableViewCell.swift in Sources */,
 				6F434F122456F4070054642B /* TrainerDetailsViewController.swift in Sources */,
 				6F1E82AF247D1943009B47F0 /* DayWorkOuts.swift in Sources */,
+				6F808E092580FA0F009AF959 /* WeightLogViewController.swift in Sources */,
 				6F434EC42456AF2B0054642B /* CustomAlert.swift in Sources */,
 				6F20D8CC24F3CEEA008ED3B7 /* PhotoDeleteVC.swift in Sources */,
 				6F9368132462B798007656D2 /* BorderCellTableViewCell.swift in Sources */,
@@ -1745,6 +1769,7 @@
 				6F7EBC51245082C000453649 /* BaseViewController.swift in Sources */,
 				6F31194B24739C2A00E4CE17 /* WaterViewController.swift in Sources */,
 				6FB1166224B6C900006C77CD /* CountriesInfo.swift in Sources */,
+				6F808DC12580C073009AF959 /* YoutubeVideoVC.swift in Sources */,
 				6F5EF989257A0C1500B3C3EA /* ContactCommentsViewController.swift in Sources */,
 				6F3119282465315C00E4CE17 /* ConfirmSignUpViewController.swift in Sources */,
 				6F9DD771255168B3005AC016 /* TrainerSearch.swift in Sources */,
@@ -1773,11 +1798,13 @@
 				6F31194E24739C2A00E4CE17 /* DietListViewController.swift in Sources */,
 				6F2F5984247503E9008599E9 /* WODetailVC.swift in Sources */,
 				6F93681A2462B8F8007656D2 /* PrimaryGoalViewController.swift in Sources */,
+				6F808E042580FA00009AF959 /* WaterEditViewController.swift in Sources */,
 				6F3D7FBF24602A210065170D /* Public.swift in Sources */,
 				829AEB8F25122C1D006FC02C /* FoodScanViewController.swift in Sources */,
 				6F67A7D0248E03EF00A26115 /* ExerciseInfoView.swift in Sources */,
 				6F1B99D824A5230F00DAE452 /* ProfileViewController.swift in Sources */,
 				6F549CAA24E2F08B0021BF84 /* CallViewController.swift in Sources */,
+				6F808DFA2580E405009AF959 /* MealEditViewController.swift in Sources */,
 				6F7EBC772451B49F00453649 /* TrainersListViewController.swift in Sources */,
 				6F69D8E124A5EE8F00AF7EB4 /* SingUpPopUpVC.swift in Sources */,
 				6F31194C24739C2A00E4CE17 /* DietListTableViewCell.swift in Sources */,
@@ -1807,6 +1834,7 @@
 				6F434EED2456D2220054642B /* ReachabilityService.swift in Sources */,
 				6F434EE72456D2220054642B /* APIRequest.swift in Sources */,
 				6F1450C2249CD37B00F3F277 /* UnderlineTextField.swift in Sources */,
+				6F808E0E2580FA26009AF959 /* ExercisesViewController.swift in Sources */,
 				6F5EF984257A0B9E00B3C3EA /* ContactTableViewCell.swift in Sources */,
 				6F93683A24631738007656D2 /* HabitChoiceViewController.swift in Sources */,
 				6F3D7FB5246029B50065170D /* Setup.swift in Sources */,

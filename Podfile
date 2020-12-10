@@ -29,6 +29,7 @@ target '1o1 Fitness' do
   pod 'BarcodeScanner'
   pod 'Firebase/Auth'
   pod 'PieCharts'
+  pod "youtube-ios-player-helper"
 
   target '1o1 FitnessTests' do
     inherit! :search_paths
