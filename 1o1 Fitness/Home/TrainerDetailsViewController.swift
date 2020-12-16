@@ -586,7 +586,7 @@ extension TrainerDetailsViewController:TrainerVideosViewDelegate,AVPlayerViewCon
             }
         }
     func youTubeVideoSelected(urlString:String) {
-        let url  = NSURL(string: urlString)
+       // let url  = NSURL(string: urlString)
         let storyboard = UIStoryboard(name: "YoutubeVideoVC", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "YoutubeVideoVC") as! YoutubeVideoVC
         let temp = urlString.components(separatedBy: "=")
@@ -595,14 +595,7 @@ extension TrainerDetailsViewController:TrainerVideosViewDelegate,AVPlayerViewCon
         }else {
             controller.videoId = ""
         }
-       
         self.navigationController?.present(controller, animated: true, completion: nil)
-
-//        if UIApplication.shared.canOpenURL(url! as URL) == true  {
-//            UIApplication.shared.open(url! as URL, options: [:]) { (_) in
-//
-//            }
-//        }
     }
 }
 extension TrainerDetailsViewController:PackagesViewDelegate

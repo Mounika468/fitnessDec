@@ -101,6 +101,10 @@ class SignUpViewController: UIViewController {
         
         self.countryCode2Btn.layer.cornerRadius = 2.0
         self.countryCode2Btn.backgroundColor = UIColor.init(red: 91/255, green: 91/255, blue: 91/255, alpha: 0.5)
+        self.emailTxtField.autocorrectionType = .yes
+        self.fsTxtField.autocorrectionType = .yes
+        self.lnTxtField.autocorrectionType = .yes
+        self.userNameTxtField.autocorrectionType = .yes
     }
     @IBAction func countryCode2BtnTapped(_ sender: Any) {
 //        if countryCode2Btn.isSelected {

@@ -139,7 +139,7 @@ class PackageDetailsViewController: UIViewController {
             return
         }
         if self.packageDetails?.isAnyActiveProgram ?? false == true {
-            self.presentAlertWithTitle(title: "", message: "You have already active program running. Do you still continue for new subscribtion", options:"Cancel", "OK", completion: { (option) in
+            self.presentAlertWithTitle(title: "", message: "You have already active program running. Do you still continue for new subscription", options:"Cancel", "OK", completion: { (option) in
                 if option == 1 {
                     self.proccedForSubscribe()
                 }

@@ -361,7 +361,7 @@ class LoginViewController: UIViewController {
         googleBtn.layer.cornerRadius = 15.0
         googleBtn.layer.borderColor = AppColours.greenBorder.cgColor
         googleBtn.layer.borderWidth = 1.0
-        
+        self.emailTxtField.autocorrectionType = .yes
        
     }
     

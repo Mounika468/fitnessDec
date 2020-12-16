@@ -171,6 +171,7 @@ class AddressVC: UIViewController, UITextFieldDelegate {
           
             focusManager.focus(index: 0)
         }
+        self.nametxtField.autocorrectionType = .yes
        
     }
     override func viewWillAppear(_ animated: Bool) {

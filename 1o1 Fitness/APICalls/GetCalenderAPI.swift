@@ -339,9 +339,11 @@ final class GetDietByDateAPI: API
                                         errorHandler: @escaping (APIError) -> Void) {
         
         // ?trainee_id=37aa26f0-14a4-40e5-ba78-a6825c36d3e5&program_id=5ec8cbcb71038065bb3dc8a2
-         let urlString = searchFoodItems + searchString
+         var urlString = searchFoodItems + searchString
          //let request = APIRequest((method: .post, url: urlString, parameters: parameters, headers: header, data))
-         let request = APIRequest(method: .get, url: urlString, parameters: nil, headers: header, dataParams: nil)
+        urlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? urlString
+
+        let request = APIRequest(method: .get, url: urlString, parameters: nil, headers: header, dataParams: nil)
 
          sendAPIRequest(request,
                         successHandler: { (json: JSON) in
