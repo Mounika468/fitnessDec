@@ -318,6 +318,9 @@
 		6FFF0D4B254C765A005F20DE /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFF0D4A254C765A005F20DE /* OrdersViewController.swift */; };
 		6FFF0D50254C7663005F20DE /* OrdersViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FFF0D4F254C7663005F20DE /* OrdersViewController.storyboard */; };
 		6FFF0D55254C834E005F20DE /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFF0D54254C834E005F20DE /* OrderTableViewCell.swift */; };
+		821B6B8B25907412002BF77E /* RemindersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B6B8A25907412002BF77E /* RemindersAPI.swift */; };
+		821B6B9025907468002BF77E /* RemindersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B6B8F25907468002BF77E /* RemindersModel.swift */; };
+		821B6BD125907DEB002BF77E /* PushNotificationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821B6BD025907DEB002BF77E /* PushNotificationsHelper.swift */; };
 		829AEB8F25122C1D006FC02C /* FoodScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829AEB8E25122C1D006FC02C /* FoodScanViewController.swift */; };
 		829AEB9125123A59006FC02C /* OCRFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829AEB9025123A59006FC02C /* OCRFormView.swift */; };
 		829AEB9325123A68006FC02C /* OCRFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829AEB9225123A68006FC02C /* OCRFormView.xib */; };
@@ -664,6 +667,9 @@
 		6FFF0D4F254C7663005F20DE /* OrdersViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OrdersViewController.storyboard; sourceTree = "<group>"; };
 		6FFF0D54254C834E005F20DE /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		708F8E14EAAE6ADD0D98A13B /* Pods-1o1 Fitness.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1o1 Fitness.release.xcconfig"; path = "Target Support Files/Pods-1o1 Fitness/Pods-1o1 Fitness.release.xcconfig"; sourceTree = "<group>"; };
+		821B6B8A25907412002BF77E /* RemindersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersAPI.swift; sourceTree = "<group>"; };
+		821B6B8F25907468002BF77E /* RemindersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersModel.swift; sourceTree = "<group>"; };
+		821B6BD025907DEB002BF77E /* PushNotificationsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsHelper.swift; sourceTree = "<group>"; };
 		822C7061328D28626446E792 /* Pods_1o1_FitnessTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1o1_FitnessTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		829AEB8E25122C1D006FC02C /* FoodScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodScanViewController.swift; sourceTree = "<group>"; };
 		829AEB9025123A59006FC02C /* OCRFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRFormView.swift; sourceTree = "<group>"; };
@@ -959,6 +965,7 @@
 				6F9DD770255168B3005AC016 /* TrainerSearch.swift */,
 				6F5EF8D625777CF400B3C3EA /* NotificationsAPI.swift */,
 				6F5EF98D257A0DD300B3C3EA /* ContactsAPI.swift */,
+				821B6B8A25907412002BF77E /* RemindersAPI.swift */,
 			);
 			path = APICalls;
 			sourceTree = "<group>";
@@ -992,6 +999,7 @@
 				6F7AD5FC254A9EB2000EE822 /* ProgramsData.swift */,
 				6F5EF8DB25777D9700B3C3EA /* NotificationsModel.swift */,
 				6F5EF992257A0EC500B3C3EA /* ContactUsModel.swift */,
+				821B6B8F25907468002BF77E /* RemindersModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1185,6 +1193,7 @@
 				6F7EBC832452EEB000453649 /* CustomAlertController.swift */,
 				6F434F232457026A0054642B /* CardView.swift */,
 				6F434F2924580A2C0054642B /* LocationServices.swift */,
+				821B6BD025907DEB002BF77E /* PushNotificationsHelper.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -1705,6 +1714,7 @@
 				6F3D7F8D245FED8F0065170D /* GenderViewController.swift in Sources */,
 				6F7EBC6D24516A7E00453649 /* HeaderCollectionViewCell.swift in Sources */,
 				6F1450C3249CD37B00F3F277 /* FocusManager.swift in Sources */,
+				821B6BD125907DEB002BF77E /* PushNotificationsHelper.swift in Sources */,
 				6F434F342459B9940054642B /* PackagesView.swift in Sources */,
 				6F434F2A24580A2C0054642B /* LocationServices.swift in Sources */,
 				6FB1166624B87122006C77CD /* AddressPopVC.swift in Sources */,
@@ -1719,6 +1729,7 @@
 				6F9368262462C049007656D2 /* DaysCollectionViewCell.swift in Sources */,
 				6F1BEFF224E5B25900068BBB /* Utils.swift in Sources */,
 				829AEB9125123A59006FC02C /* OCRFormView.swift in Sources */,
+				821B6B8B25907412002BF77E /* RemindersAPI.swift in Sources */,
 				6F3D7FA2246022EE0065170D /* HeightViewController.swift in Sources */,
 				6F434EFF2456D2520054642B /* TrainerVideoList.swift in Sources */,
 				6F0851A4248A43C4000E1837 /* CardioUpdateVC.swift in Sources */,
@@ -1799,6 +1810,7 @@
 				6F2F5984247503E9008599E9 /* WODetailVC.swift in Sources */,
 				6F93681A2462B8F8007656D2 /* PrimaryGoalViewController.swift in Sources */,
 				6F808E042580FA00009AF959 /* WaterEditViewController.swift in Sources */,
+				821B6B9025907468002BF77E /* RemindersModel.swift in Sources */,
 				6F3D7FBF24602A210065170D /* Public.swift in Sources */,
 				829AEB8F25122C1D006FC02C /* FoodScanViewController.swift in Sources */,
 				6F67A7D0248E03EF00A26115 /* ExerciseInfoView.swift in Sources */,
@@ -2048,7 +2060,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "1o1 Fitness/1o1 Fitness.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2064,7 +2076,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.1o1Fitness.1o1Fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev Profile";
+				PROVISIONING_PROFILE_SPECIFIER = KDistributionProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2076,7 +2088,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "1o1 Fitness/1o1 Fitness.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = AK2PYDSVY7;
@@ -2090,7 +2102,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.1o1Fitness.1o1Fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Dev Profile";
+				PROVISIONING_PROFILE_SPECIFIER = KDistributionProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

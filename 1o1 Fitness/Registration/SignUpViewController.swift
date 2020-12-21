@@ -144,7 +144,7 @@ class SignUpViewController: UIViewController {
             
         }
           
-          let hostedUIOptions = HostedUIOptions(scopes: ["openid", "email", "profile","phone"], identityProvider: "Google")
+          let hostedUIOptions = HostedUIOptions(scopes: ["openid","email","profile","aws.cognito.signin.user.admin"], identityProvider: "Google")
           
           // Present the Hosted UI sign in.
           AWSMobileClient.sharedInstance().showSignIn(navigationController: self.navigationController!, hostedUIOptions: hostedUIOptions) { (userState, error) in
@@ -260,12 +260,13 @@ class SignUpViewController: UIViewController {
                 }
                 
             default:
+                DispatchQueue.main.async {
+                    self.presentAlertWithTitle(title: "Error", message: "\(error)", options: "OK") {_ in
+                    }
+                }
                 break
             }
-            DispatchQueue.main.async {
-                self.presentAlertWithTitle(title: "Error", message: "\(error)", options: "OK") {_ in
-                }
-            }
+
         }
         
         guard let signUpResult = signUpResult else {

@@ -69,11 +69,11 @@ class AccountViewController: UIViewController {
         logOutTapGesture.addTarget(self, action: #selector(self.logOutTapGestureTouched(_:)))
         logOutView.addGestureRecognizer(logOutTapGesture)
         
-        myOrdersLbl.textColor = AppColours.topBarGreen
-        changePwd.textColor = AppColours.topBarGreen
-        bAddressLbl.textColor = AppColours.topBarGreen
-        deleteAccLbl.textColor = AppColours.topBarGreen
-        logOutLbl.textColor = AppColours.topBarGreen
+        myOrdersLbl.textColor = AppColours.textGreen
+        changePwd.textColor = AppColours.textGreen
+        bAddressLbl.textColor = AppColours.textGreen
+        deleteAccLbl.textColor = AppColours.textGreen
+        logOutLbl.textColor = AppColours.textGreen
         
         print("Trainee details \( TraineeDetails.traineeDetails?.trainee_address)")
     }
@@ -139,6 +139,7 @@ class AccountViewController: UIViewController {
             
         }
         self.deleteLocalUserData()
+        
     }
     
     func deleteLocalUserData() {

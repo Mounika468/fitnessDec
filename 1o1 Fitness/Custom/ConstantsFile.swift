@@ -77,6 +77,10 @@ let getNotificationsAPI = "\(devHostURL)notificationservice/api/notifications/no
 let getcontactUs = "\(devHostURL)traineeservice/api/trainees/request/types"
 let postContactComments = "\(devHostURL)traineeservice/api/trainees/request"
 
+//Reminders API
+let getReminders = "\(devHostURL)traineeservice/api/trainees/reminder/"
+let postReminders = "\(devHostURL)traineeservice/api/trainees/reminder"
+
 struct UserPoolCredentials {
   
     static let accessKey = "AKIAUXZP6WV4EEXWBXUY"

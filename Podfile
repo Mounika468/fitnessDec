@@ -28,6 +28,7 @@ target '1o1 Fitness' do
   pod 'IQKeyboardManagerSwift'
   pod 'BarcodeScanner'
   pod 'Firebase/Auth'
+  pod 'Firebase/Messaging'
   pod 'PieCharts'
   pod "youtube-ios-player-helper"
 

@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
             print("Error: \(error.debugDescription)")
             
         }
-        let hostedUIOptions = HostedUIOptions(scopes: ["openid", "email", "profile","phone"], identityProvider: "Google")
+        let hostedUIOptions = HostedUIOptions(scopes: ["openid","email","profile","aws.cognito.signin.user.admin"], identityProvider: "Google")
         
         // Present the Hosted UI sign in.
         AWSMobileClient.sharedInstance().showSignIn(navigationController: self.navigationController!, hostedUIOptions: hostedUIOptions) { (userState, error) in
@@ -227,15 +227,31 @@ class LoginViewController: UIViewController {
             if self.isLoading == true {
                 return
             }
-            if let error = error  {
-               
-                DispatchQueue.main.async {
-                    LoadingOverlay.shared.hideOverlayView()
-                    self.presentAlertWithTitle(title: "Error", message: "\(error.localizedDescription)", options: "OK") {_ in
-                        self.isLoading = false
+            if let error = error as? AWSMobileClientError {
+                
+                switch(error) {
+                case .userNotConfirmed(let message):
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.hideOverlayView()
+                        self.presentAlertWithTitle(title: "User Not Confirmed", message: "\(message)", options: "OK") {_ in
+                            self.isLoading = false
+                            let confirmSignupViewController = ConfirmSignUpViewController(username: username, password: password)
+                            self.navigationController?.pushViewController(confirmSignupViewController, animated: true)
+                        }
                     }
+                    
+                default:
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.hideOverlayView()
+                        self.presentAlertWithTitle(title: "Error", message: "\(error.localizedDescription)", options: "OK") {_ in
+                            self.isLoading = false
+                        }
+                    }
+                    return
+                    
                 }
-                return
+                
+               
             }
             
             guard let signInResult = signInResult else {
