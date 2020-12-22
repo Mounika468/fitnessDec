@@ -201,7 +201,61 @@ class HomeViewController: UIViewController {
             LoadingOverlay.shared.showOverlay(view: window)
         }
         
-        TrainerbyLocationAPI.post(parameters:location,header:authenticatedHeaders, successHandler: { [weak self] trainerInfo  in
+        TrainerbyLocationAPI.postCalltoToken(parameters: location, details: "partial") { [weak self] trainerInfo  in
+            if trainerInfo.count > 0 {
+                self?.trainersInfo = trainerInfo
+                DispatchQueue.main.async {
+                    self?.trainersCollectionView.reloadData()
+                    LoadingOverlay.shared.hideOverlayView()
+                }
+            }else {
+                DispatchQueue.main.async {
+                    LoadingOverlay.shared.hideOverlayView()
+                    self?.presentAlertWithTitle(title: "", message: "No trainer found.", options: "OK") {_ in
+                    }
+                    
+                }
+            }
+            let userdefaults = UserDefaults.standard
+            if let savedValue = userdefaults.string(forKey: UserDefaultsKeys.guestLogin) {
+                if  savedValue != UserDefaultsKeys.guestLogin  {
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.showOverlay(view: window)
+                    }
+                    self?.getTraineeDetails(authenticatedHeaders: authenticatedHeaders)
+                }else  {
+                   // if ProgramDetails.programDetails.programId.count == 0 {
+                        let indexPath = IndexPath(item: 1, section: 0)
+                        self?.headerCollectionView.reloadItems(at: [indexPath])
+                        //CollectionView.reloadItems(at: IndexPath])
+                   // }
+                }
+            }
+        } errorHandler: { [weak self] error in
+            print(" error \(error)")
+            DispatchQueue.main.async {
+                LoadingOverlay.shared.hideOverlayView()
+            }
+            let userdefaults = UserDefaults.standard
+            if let savedValue = userdefaults.string(forKey: UserDefaultsKeys.guestLogin) {
+                if  savedValue != UserDefaultsKeys.guestLogin  {
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.showOverlay(view: window)
+                    }
+                    self?.getTraineeDetails(authenticatedHeaders: authenticatedHeaders)
+                }else {
+                  //  if ProgramDetails.programDetails.programId.count == 0 {
+                    DispatchQueue.main.async {
+                        let indexPath = IndexPath(item: 1, section: 0)
+                        self?.headerCollectionView.reloadItems(at: [indexPath])
+                    }
+                        //CollectionView.reloadItems(at: IndexPath])
+                  //  }
+                }    }
+        }
+
+        
+      /*  TrainerbyLocationAPI.post(parameters:location,header:authenticatedHeaders, successHandler: { [weak self] trainerInfo  in
             if trainerInfo != nil {
                 self?.trainersInfo = trainerInfo
                 DispatchQueue.main.async {
@@ -252,7 +306,7 @@ class HomeViewController: UIViewController {
                         //CollectionView.reloadItems(at: IndexPath])
                   //  }
                 }    }
-        }
+        } */
         // }
         
         

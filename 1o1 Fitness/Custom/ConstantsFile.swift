@@ -19,7 +19,7 @@ import UIKit
 let devHostURL = "https://demo.1o1fitness.com/"
 let demoHostURL = "https://demo.1o1fitness.com/"
 let getAllTrainers = "\(devHostURL)traineeservice/api/guest/trainers/all"
-let getTrainerByLocation = "\(devHostURL)traineeservice/api/guest/trainers?"
+let getTrainerByLocation = "\(devHostURL)traineeservice/api/guest/trainers"
 let getTrainerPackage = "\(devHostURL)traineeservice/api/guest/trainers/"
 let getTrainerProfile = "\(devHostURL)traineeservice/api/guest/trainers/"
 let getTrainerVideoList = "\(devHostURL)traineeservice/api/guest/trainer/videos/"

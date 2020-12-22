@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Alamofire
 
 final class TrainerbyLocationAPI: API
 {
@@ -45,6 +45,77 @@ final class TrainerbyLocationAPI: API
             errorHandler(error)
         })
 
+    }
+    static func postCalltoToken(parameters: Dictionary<String, Any>,details:String,
+                                successHandler: @escaping ([TrainerInfo]) -> Void,
+                                errorHandler: @escaping (String) -> Void) {
+        
+        let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
+        var authenticatedHeaders: [String: String] {
+            [
+                HeadersKeys.authorization: "\(HeaderValues.token) \(token!) ",
+                HeadersKeys.contentType: HeaderValues.json
+            ]
+        }
+        let userdefaults = UserDefaults.standard
+        var fcmtoken = Token.fcmToken ?? ""
+        if let savedValue = userdefaults.string(forKey: UserDefaultsKeys.guestLogin) {
+            if  savedValue == UserDefaultsKeys.guestLogin  {
+                fcmtoken = ""
+            }
+        }
+        
+        let traineeId = UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!
+        let longitude = parameters["longitude"] as! String
+        let latitude = parameters["latitude"] as! String
+        let postBody : [String: Any] = ["longitude": longitude,"latitude":latitude,"details": details,"trainee_id": traineeId,"pagesize": 5,"pagenumber": 1, "registration_token":fcmtoken]
+
+        let urlString = getTrainerByLocation
+        guard let url = URL(string: urlString) else {return}
+        var request        = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(HeaderValues.token) \(token!) ", forHTTPHeaderField: "Authorization")
+        do {
+            request.httpBody   = try JSONSerialization.data(withJSONObject: postBody)
+        } catch let error {
+            print("Error : \(error.localizedDescription)")
+        }
+        Alamofire.request(request).responseJSON{ (response) in
+            
+            print("response is \(response)")
+            DispatchQueue.main.async {
+                LoadingOverlay.shared.hideOverlayView()
+            }
+            
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 200:
+                    if let json = response.result.value as? [String: Any] {
+                        do {
+                            if json["code"] as? Int != 30
+                            {
+                                if  let jsonDict = json[ResponseKeys.data.rawValue]   {
+                                    successHandler([])
+                                }
+                            }else {
+                                if let jsonMessage = json[ResponseKeys.message.rawValue] {
+                                    messageString = (jsonMessage as? String)!
+                                    successHandler([])
+                                }
+                                successHandler([])
+                            }
+                        }catch let error {
+                            errorHandler(error.localizedDescription)
+                        }
+                    }
+ 
+                default:
+                    errorHandler("Fetching details failed")
+
+                }
+            }
+        }
     }
 }
 final class GetTrainersAPI: API

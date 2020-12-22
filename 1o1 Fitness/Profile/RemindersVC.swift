@@ -48,13 +48,11 @@ class RemindersVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.getReminders()
-        mainSwitch.setOn(true, animated: true)
-        weightSwitch.setOn(true, animated: true)
-        drinkSwitch.setOn(true, animated: true)
-        mealSwitch.setOn(true, animated: true)
-        exerciseSwitch.setOn(true, animated: true)
+        
     }
-
+    func updateswitches() {
+        
+    }
     @IBAction func weightSwitchChanged(_ sender: Any) {
         
     }
@@ -107,14 +105,28 @@ class RemindersVC: UIViewController {
                 HeadersKeys.contentType: HeaderValues.json
             ]
         }
-        RemindersAPI.getRemindersCall(header: authenticatedHeaders) { (reminders) in
+        RemindersAPI.getRemindersCall(header: authenticatedHeaders) {[weak self] (reminders) in
             DispatchQueue.main.async {
                 LoadingOverlay.shared.hideOverlayView()
                 print(" reminders \(reminders)")
+                if reminders != nil {
+                    self?.mainSwitch.setOn(reminders?.meal?.isNotify ??  false, animated: true)
+                    self?.weightSwitch.setOn(reminders?.weight?.isNotify ??  false, animated: true)
+                    self?.drinkSwitch.setOn(reminders?.water?.isNotify ??  false, animated: true)
+                    self?.mealSwitch.setOn(reminders?.meal?.isNotify ??  false, animated: true)
+                    self?.exerciseSwitch.setOn(reminders?.exercise?.isNotify ??  false, animated: true)
+                }
             }
-        } errorHandler: { (error) in
+        } errorHandler: {[weak self] (error) in
             DispatchQueue.main.async {
                 LoadingOverlay.shared.hideOverlayView()
+                self?.presentAlertWithTitle(title: "", message: "Fetching the reminders failed", options: "OK") {_ in
+                    self?.mainSwitch.setOn(false, animated: true)
+                    self?.weightSwitch.setOn(false, animated: true)
+                    self?.drinkSwitch.setOn(false, animated: true)
+                    self?.mealSwitch.setOn(false, animated: true)
+                    self?.exerciseSwitch.setOn(false, animated: true)
+                }
             }
         }
 
@@ -156,7 +168,7 @@ class RemindersVC: UIViewController {
                     if let json = response.result.value as? [String: Any] {
                         print("JSON: \(json)") // serialized json response
                         do {
-                            if json["code"] as? Int == 80
+                            if json["code"] as? Int == 0
                             {
                                 if  let jsonDict = json[ResponseKeys.data.rawValue]   {
                                     if jsonDict is NSNull {
@@ -164,22 +176,25 @@ class RemindersVC: UIViewController {
                                         if let jsonMessage = json[ResponseKeys.message.rawValue] {
                                             messageString = (jsonMessage as? String)!
                                         }
+                                        DispatchQueue.main.async {
+                                            LoadingOverlay.shared.hideOverlayView()
+                                            self.presentAlertWithTitle(title: "", message: messageString, options: "OK") {_ in
+                                            }
+                                        }
                                         
                                     }else {
                                         let jsonData = try JSONSerialization.data(withJSONObject: jsonDict as Any,
                                                                                   options: .prettyPrinted)
                                         self.reminders = try JSONDecoder().decode(Reminders.self, from: jsonData)
-                                    }
-                                    DispatchQueue.main.async {
-                                        LoadingOverlay.shared.hideOverlayView()
-                                        self.presentAlertWithTitle(title: "", message: messageString, options: "OK") {_ in
-                                            self.navigationController?.popToRootViewController(animated: true)
+                                        DispatchQueue.main.async {
+                                            LoadingOverlay.shared.hideOverlayView()
                                         }
                                     }
+
                                 } else {
                                     DispatchQueue.main.async {
                                          LoadingOverlay.shared.hideOverlayView()
-                                        self.presentAlertWithTitle(title: "", message: "Fetching the Schedules failed", options: "OK") {_ in
+                                        self.presentAlertWithTitle(title: "", message: "Syncing the reminders failed", options: "OK") {_ in
                                         }
                                     }
                                 }
@@ -195,7 +210,7 @@ class RemindersVC: UIViewController {
                             } }catch let error {
                                 DispatchQueue.main.async {
                                     LoadingOverlay.shared.hideOverlayView()
-                                    self.presentAlertWithTitle(title: "", message: "Posting comments failed", options: "OK") {_ in
+                                    self.presentAlertWithTitle(title: "", message: "Syncing the reminders failed", options: "OK") {_ in
                                     }
                                 }
                         }
@@ -203,7 +218,7 @@ class RemindersVC: UIViewController {
                     
                 default:
                     DispatchQueue.main.async {
-                        self.presentAlertWithTitle(title: "", message: "Posting comments failed", options: "OK") {_ in
+                        self.presentAlertWithTitle(title: "", message: "Syncing the reminders failed", options: "OK") {_ in
                         }
                     }
                 }

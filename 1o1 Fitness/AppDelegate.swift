@@ -97,6 +97,7 @@ var window: UIWindow?
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
        // updateFirestorePushTokenIfNeeded()
         let dataDict:[String: String] = ["token": fcmToken ]
+        Token.setToken(fcmToken: fcmToken)
           NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
     }
 

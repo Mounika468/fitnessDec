@@ -75,3 +75,10 @@ final class RemindersAPI: API
        }
 }
 
+struct Token {
+    static var fcmToken:String? = nil
+
+    static func setToken(fcmToken:String) {
+        Token.fcmToken = fcmToken
+    }
+}
