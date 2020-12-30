@@ -39,6 +39,7 @@ struct TraineeInfo  {
      var profile_submission: Bool = false
      var traineeProfileImg: String = ""
     var targetWeight: Float = 0.0
+    var notificationCount: Int = 0
 }
 struct ProgramDetails {
     static var programDetails: ProgramDetails = ProgramDetails()
@@ -246,6 +247,7 @@ struct TraineeDetails: Decodable {
     let mobile_no: String?
     var targetWeight: Float?
     var dayProgress: DayProgress?
+    let notificationCount: Int?
     static var traineeDetails: TraineeDetails?
     init(trainee_id: String,
          first_name: String?,
@@ -271,7 +273,8 @@ struct TraineeDetails: Decodable {
          profile_submission: Bool?,
          app_version: Double?,
          user_type: String?,
-         targetWeight:Float) {
+         targetWeight:Float,
+         notificationCount: Int?) {
         
         self.trainee_id = trainee_id
         self.targetWeight = targetWeight
@@ -298,6 +301,7 @@ struct TraineeDetails: Decodable {
         self.profile_submission = profile_submission
         self.app_version = app_version
         self.user_type = user_type
+        self.notificationCount = notificationCount
         
     }
     
@@ -347,6 +351,7 @@ struct TraineeDetails: Decodable {
         self.lat_logAttributes = try container.decodeIfPresent(Lat_logAttributes.self, forKey: .lat_logAttributes)
         self.trainee_address = try container.decodeIfPresent([Address].self, forKey: .trainee_address)
         self.dayProgress = try container.decodeIfPresent(DayProgress.self, forKey: .dayProgress)
+        self.notificationCount = try container.decodeIfPresent(Int.self, forKey: .notificationCount)
         
     }
     
@@ -395,6 +400,7 @@ extension TraineeDetails {
         case targetWeight
         case bmi_bmr
         case dayProgress
+        case notificationCount
     }
 }
 struct TraineeProfileImg:Codable {

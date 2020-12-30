@@ -13,7 +13,7 @@ final class NotificationsAPI: API
                         successHandler: @escaping ([Notifications]?) -> Void,
                         errorHandler: @escaping (APIError) -> Void) {
            
-           let urlString =  String(format: "%@%@?pagesize=25&pagenumber=0&selection=false&requestedBy=Trainee", getNotificationsAPI,UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!)
+           let urlString =  String(format: "%@%@?requestedBy=Trainee&timeZone=%@&selection=false&pagenumber=0&pagesize=25", getNotificationsAPI,UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!,TimeZone.current.identifier)
            let request = APIRequest(method: .get, url: urlString, parameters: nil, headers: header, dataParams: nil)
         sendAPIRequest(request,
                        successHandler: { (json: JSON) in

@@ -561,11 +561,20 @@ extension CallViewController: UITableViewDelegate,UITableViewDataSource {
                     }else {
                         cell.bookNowBtn.isEnabled = true
                     }
+                    if schedule?.status == "completed" {
+                        cell.bookNowBtn.setTitle("Completed", for: .normal)
+                        cell.bookNowBtn.isEnabled = false
+                    }
                 }else {
-                    cell.bookNowBtn.isEnabled = true
-                    cell.deleteTapped.isHidden = false
-                     cell.deleteTapped.tag = indexPath.row
-                    cell.deleteTapped.addTarget(self, action: #selector(self.deleteTappedSelection(_:)), for: .touchUpInside)
+                    if schedule?.status == "completed" {
+                        cell.bookNowBtn.setTitle("Completed", for: .normal)
+                        cell.bookNowBtn.isEnabled = false
+                    }else {
+                        cell.bookNowBtn.isEnabled = true
+                        cell.deleteTapped.isHidden = false
+                         cell.deleteTapped.tag = indexPath.row
+                        cell.deleteTapped.addTarget(self, action: #selector(self.deleteTappedSelection(_:)), for: .touchUpInside)
+                    }
                 }
                 
             }else {

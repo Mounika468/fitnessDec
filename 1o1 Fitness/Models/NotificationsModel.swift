@@ -15,5 +15,6 @@ struct Notifications:Codable {
     let imgPath: String?
     let notificationHeader:String?
     let read:Bool?
+    let time:String?
     let active:Bool?
 }

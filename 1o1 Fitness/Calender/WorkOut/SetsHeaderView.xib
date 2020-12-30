@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,39 +24,39 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLr-bA-L7i">
-                    <rect key="frame" x="199.5" y="49" width="22" height="22"/>
+                    <rect key="frame" x="187.5" y="49" width="30" height="22"/>
                     <state key="normal" image="refresh"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZW-gI-a9y">
-                    <rect key="frame" x="271.5" y="49" width="22" height="22"/>
+                    <rect key="frame" x="267.5" y="49" width="30" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="YMO-EM-one"/>
-                        <constraint firstAttribute="width" constant="22" id="YXB-W1-KWP"/>
+                        <constraint firstAttribute="width" constant="30" id="YXB-W1-KWP"/>
                     </constraints>
                     <state key="normal" image="repeat"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0EG-4x-ZVm">
-                    <rect key="frame" x="343.5" y="49" width="22" height="22"/>
+                    <rect key="frame" x="347.5" y="49" width="30" height="22"/>
                     <state key="normal" image="weight"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PO3-Vy-0Lg">
-                    <rect key="frame" x="415.5" y="49" width="22" height="22"/>
+                    <rect key="frame" x="422.5" y="49" width="30" height="22"/>
                     <state key="normal" image="rest"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egz-sQ-4Cz">
-                    <rect key="frame" x="199.5" y="81" width="22.5" height="22"/>
+                    <rect key="frame" x="191.5" y="81" width="22.5" height="22"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                     <color key="textColor" red="0.050980392159999999" green="0.80392156859999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etS-jC-gbo">
-                    <rect key="frame" x="335.5" y="81" width="38.5" height="22"/>
+                    <rect key="frame" x="343.5" y="81" width="38.5" height="22"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                     <color key="textColor" red="0.050980392159999999" green="0.80392156859999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rest in Sec" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsC-XG-y0b">
-                    <rect key="frame" x="398" y="81" width="57.5" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rest" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsC-XG-y0b">
+                    <rect key="frame" x="426" y="81" width="23" height="22"/>
                     <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
                     <color key="textColor" red="0.050980392159999999" green="0.80392156859999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -91,7 +91,7 @@
                 <constraint firstItem="etS-jC-gbo" firstAttribute="centerX" secondItem="0EG-4x-ZVm" secondAttribute="centerX" id="aqU-r5-B05"/>
                 <constraint firstItem="AsC-XG-y0b" firstAttribute="height" secondItem="XZO-wO-eIa" secondAttribute="height" id="bMt-Sa-pyd"/>
                 <constraint firstItem="VLr-bA-L7i" firstAttribute="width" secondItem="NZW-gI-a9y" secondAttribute="width" id="em7-xa-iJE"/>
-                <constraint firstItem="PO3-Vy-0Lg" firstAttribute="leading" secondItem="0EG-4x-ZVm" secondAttribute="trailing" constant="50" id="gHW-23-qoM"/>
+                <constraint firstItem="PO3-Vy-0Lg" firstAttribute="leading" secondItem="0EG-4x-ZVm" secondAttribute="trailing" constant="45" id="gHW-23-qoM"/>
                 <constraint firstItem="VLr-bA-L7i" firstAttribute="top" secondItem="NZW-gI-a9y" secondAttribute="top" id="hR2-12-pak"/>
                 <constraint firstItem="XZO-wO-eIa" firstAttribute="centerX" secondItem="NZW-gI-a9y" secondAttribute="centerX" id="nPP-UI-sDm"/>
                 <constraint firstItem="NZW-gI-a9y" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" constant="20" id="nb7-Ws-Bcq"/>

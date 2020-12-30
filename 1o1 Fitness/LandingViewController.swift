@@ -21,6 +21,13 @@ final class LandingViewController : BaseViewController {
     @IBOutlet weak var rightBtn: UIButton!
     @IBOutlet weak var centreImgView: UIImageView!
      var isLoading : Bool = false
+    let ciImages = [
+        UIImage(named: "b_exercise"),
+        UIImage(named: "s_zumba"),
+        UIImage(named: "")
+    ]
+//    var timer: Timer?
+//    var duration : Float = 0.25
     override func viewDidLoad() {
            super.viewDidLoad()
 
@@ -28,9 +35,31 @@ final class LandingViewController : BaseViewController {
            
            self.centreImgView.image =  UIImage(named: "b_exercise")
            setupButtonsBackgrounds()
+      //  timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector:#selector(displayImgView1), userInfo: nil, repeats: true)
       
        // userdefaults.set(UserDefaultsKeys.authUser, forKey:UserDefaultsKeys.guestLogin)
        }
+//    @objc func displayImgView1()
+//    {
+//        if rightCount != 1 || leftCount == 0 {
+//            self.rightBtnTapped(rightBtn!)
+//        }else {
+//            self.leftBtnTapped(leftBtn!)
+//        }
+////        if (duration / 0.25) == 0 {
+////            self.rightBtn.setImage(UIImage(named: "s_zumba"), for: .normal)
+////            self.leftBtn.setImage(UIImage(named: "s_excercise"), for: .normal)
+////            self.centreImgView.image = UIImage(named: "b_yoga")
+////        }else if (duration / 0.5) == 0 {
+////            self.rightBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
+////            self.leftBtn.setImage(UIImage(named: ""), for: .normal)
+////            self.centreImgView.image = UIImage(named: "b_zumba")
+////        }else if (duration / 0.75) == 0 {
+////            self.rightBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
+////            self.leftBtn.setImage(UIImage(named: ""), for: .normal)
+////            self.centreImgView.image = UIImage(named: "b_zumba")
+////        }
+//    }
        private func setupButtonsBackgrounds()
        {
 

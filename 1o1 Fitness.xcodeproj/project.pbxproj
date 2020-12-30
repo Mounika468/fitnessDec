@@ -313,6 +313,7 @@
 		6FB1166624B87122006C77CD /* AddressPopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB1166524B87122006C77CD /* AddressPopVC.swift */; };
 		6FB1166824B87132006C77CD /* AddressPopVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FB1166724B87132006C77CD /* AddressPopVC.storyboard */; };
 		6FE74AA42575644700A9B700 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE74AA32575644700A9B700 /* NotificationTableViewCell.swift */; };
+		6FF5A6E7259B7B2600B2E37F /* water.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6FF5A6E6259B7B0000B2E37F /* water.caf */; };
 		6FFF0D19254B3C76005F20DE /* ForgotPwdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFF0D18254B3C76005F20DE /* ForgotPwdViewController.xib */; };
 		6FFF0D1E254B3C97005F20DE /* ForgotPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFF0D1D254B3C97005F20DE /* ForgotPwdViewController.swift */; };
 		6FFF0D4B254C765A005F20DE /* OrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFF0D4A254C765A005F20DE /* OrdersViewController.swift */; };
@@ -661,6 +662,8 @@
 		6FB1166524B87122006C77CD /* AddressPopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressPopVC.swift; sourceTree = "<group>"; };
 		6FB1166724B87132006C77CD /* AddressPopVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddressPopVC.storyboard; sourceTree = "<group>"; };
 		6FE74AA32575644700A9B700 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		6FF5A6E5259B7B0000B2E37F /* meal.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = meal.caf; sourceTree = "<group>"; };
+		6FF5A6E6259B7B0000B2E37F /* water.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = water.caf; sourceTree = "<group>"; };
 		6FFF0D18254B3C76005F20DE /* ForgotPwdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPwdViewController.xib; sourceTree = "<group>"; };
 		6FFF0D1D254B3C97005F20DE /* ForgotPwdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPwdViewController.swift; sourceTree = "<group>"; };
 		6FFF0D4A254C765A005F20DE /* OrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersViewController.swift; sourceTree = "<group>"; };
@@ -1019,6 +1022,8 @@
 		6F7EBC14244EC6D200453649 = {
 			isa = PBXGroup;
 			children = (
+				6FF5A6E5259B7B0000B2E37F /* meal.caf */,
+				6FF5A6E6259B7B0000B2E37F /* water.caf */,
 				6F23F8AC256BAF1B0094A6F0 /* Firebase */,
 				6F7EBC1F244EC6D200453649 /* 1o1 Fitness */,
 				6F7EBC36244EC6D500453649 /* 1o1 FitnessTests */,
@@ -1468,6 +1473,7 @@
 				6F820388253A185900E4EA30 /* BMIBMRVC.storyboard in Resources */,
 				6F3D7F8F245FEDAA0065170D /* GenderVC.storyboard in Resources */,
 				6F1E82BB247E69CA009B47F0 /* RestTableViewCell.xib in Resources */,
+				6FF5A6E7259B7B2600B2E37F /* water.caf in Resources */,
 				6F67A7D4248E8B0600A26115 /* DetailSectionHeader.xib in Resources */,
 				6F31195C2474FF2400E4CE17 /* WOUpdate.xib in Resources */,
 				6F3D7F93245FF29D0065170D /* ProfileHeader.xib in Resources */,
@@ -1972,8 +1978,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 32ZKPJFPTB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2032,8 +2040,10 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 32ZKPJFPTB;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2060,9 +2070,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "1o1 Fitness/1o1 Fitness.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development: Mounika Reddy (2QDVWWA587)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = AK2PYDSVY7;
 				ENABLE_BITCODE = YES;
@@ -2076,7 +2086,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.1o1Fitness.1o1Fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = KDistributionProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "Dev Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2088,9 +2098,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "1o1 Fitness/1o1 Fitness.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development: Mounika Reddy (2QDVWWA587)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = AK2PYDSVY7;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "1o1 Fitness/Info.plist";
@@ -2102,7 +2112,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.1o1Fitness.1o1Fitness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = KDistributionProfile;
+				PROVISIONING_PROFILE_SPECIFIER = "Dev Profile";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

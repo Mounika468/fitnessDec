@@ -65,10 +65,10 @@ final class TrainerbyLocationAPI: API
             }
         }
         
-        let traineeId = UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!
+        let traineeId = UserDefaults.standard.string(forKey: UserDefaultsKeys.subId) ?? ""
         let longitude = parameters["longitude"] as! String
         let latitude = parameters["latitude"] as! String
-        let postBody : [String: Any] = ["longitude": longitude,"latitude":latitude,"details": details,"trainee_id": traineeId,"pagesize": 5,"pagenumber": 1, "registration_token":fcmtoken]
+        let postBody : [String: Any] = ["longitude": longitude,"latitude":latitude,"details": details,"trainee_id": traineeId,"pagesize": 15,"pagenumber": 0, "registration_token":fcmtoken]
 
         let urlString = getTrainerByLocation
         guard let url = URL(string: urlString) else {return}
@@ -96,7 +96,15 @@ final class TrainerbyLocationAPI: API
                             if json["code"] as? Int != 30
                             {
                                 if  let jsonDict = json[ResponseKeys.data.rawValue]   {
-                                    successHandler([])
+                                    if jsonDict != nil {
+                                        let jsonData = try JSONSerialization.data(withJSONObject: jsonDict as Any,
+                                                                                  options: .prettyPrinted)
+                                        let trainerInfo = try JSONDecoder().decode([TrainerInfo].self, from: jsonData)
+                                        successHandler(trainerInfo)
+                                    }else {
+                                       successHandler([])
+                                    }
+                                    
                                 }
                             }else {
                                 if let jsonMessage = json[ResponseKeys.message.rawValue] {
@@ -123,7 +131,7 @@ final class GetTrainersAPI: API
     static func post(parameters: Dictionary<String, Any>,header:[String: String],
                      successHandler: @escaping ([TrainerInfo]) -> Void,
                      errorHandler: @escaping (APIError) -> Void) {
-        let urlString =  getAllTrainers
+        let urlString =  String(format:"%@?pagenumber=0&pagesize=15",getAllTrainers)
         let request = APIRequest(method: .get, url: urlString, parameters: nil, headers: header, dataParams: nil)
         sendAPIRequest(request,
                        successHandler: { (json: JSON) in

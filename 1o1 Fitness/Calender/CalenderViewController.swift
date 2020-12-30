@@ -837,15 +837,21 @@ class CalenderViewController: UIViewController {
                  self?.workOutView.loadWorkOuts()
                 LoadingOverlay.shared.hideOverlayView()
                 
-                if dayWorks.workouts == nil && dayWorks.cardio == nil {
-                    var message = "No data available for the selected date"
-                    if messageString.count > 0 {
-                        message = messageString
+                if (dayWorks.workouts == nil && dayWorks.cardio == nil) || dayWorks.rest == true {
+                    ProgramDetails.programDetails.dayWorkOut = nil
+                                  self?.workOutView.workOutsArr = nil
+                                  self?.workOutView.loadWorkOuts()
+                    if dayWorks.rest == true {
+                        self?.workOutView.displayRestView(message:messageString)
+                        
+                    }else {
+                        var message = "No data available for the selected date"
+                        if messageString.count > 0 {
+                            message = messageString
+                        }
+                        self?.workOutView.displayNoWorkouts(message:message)
                     }
-                     ProgramDetails.programDetails.dayWorkOut = nil
-                                   self?.workOutView.workOutsArr = nil
-                                   self?.workOutView.loadWorkOuts()
-                    self?.workOutView.displayNoWorkouts(message:message)
+                    
                 }
             }
         }) { [weak self] error in
@@ -879,7 +885,7 @@ class CalenderViewController: UIViewController {
                                                ProgramDetails.programDetails.subId = id
                                            }
        
-                  let postBody : [String: Any] = ["date": Date.getDateInFormat(format: "yyyy-MM-dd", date: Date()),"trainee_id":UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!]
+                  let postBody : [String: Any] = ["date": Date.getDateInFormat(format: "yyyy-MM-dd", date:  self.slectedDate),"trainee_id":UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!]
                    let urlString = getProgressByDate
                    guard let url = URL(string: urlString) else {return}
                    var request        = URLRequest(url: url)
@@ -1055,6 +1061,26 @@ func getDatesStatus() {
                         
                     }
        // self.getCallDetailsForDate(date:date,sc)
+    case .progressPhoto :
+        self.progressBtn.setImage(UIImage(named: "camera"), for: .normal)
+            self.progressPhotoView.isHidden = false
+            self.getAllPhotosForTheUserByDate(successHandler: { (progressPhotos) in
+                DispatchQueue.main.async {
+                    LoadingOverlay.shared.hideOverlayView()
+                    self.progressPhotoView.photosArr = progressPhotos
+                    self.progressPhotoView.refreshViews()
+                }
+            }) { (error) in
+                DispatchQueue.main.async {
+                     LoadingOverlay.shared.hideOverlayView()
+                   self.progressPhotoView.photosArr = nil
+                                self.progressPhotoView.refreshViews()
+                    self.presentAlertWithTitle(title: "", message: error, options: "OK") { _ in
+                        
+                    }
+                }
+            }
+        
     default:
          self.getWorkouts(date: date)
     }
@@ -1592,7 +1618,7 @@ extension CalenderViewController: PhotosBottomVCDelegate,CropViewControllerDeleg
                            ProgramDetails.programDetails.programId = id
                        }
                   let imageName = "iOS" + "\(Date())"
-                 let postBody : [String: Any] = ["date": Date.getDateInFormat(format: "yyyy-MM-dd", date: Date()),"trainee_id":UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!,"name":imageName,"imgcode":image.toString() as Any,"file_type":"jpg","isCalendar":true]
+                 let postBody : [String: Any] = ["date": Date.getDateInFormat(format: "yyyy-MM-dd", date: self.slectedDate),"trainee_id":UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!,"name":imageName,"imgcode":image.toString() as Any,"file_type":"jpg","isCalendar":true]
                          let urlString = savePhoto
                          guard let url = URL(string: urlString) else {return}
                          var request        = URLRequest(url: url)

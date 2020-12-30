@@ -542,15 +542,16 @@ extension FoodDetailsVC: UITextFieldDelegate {
         print("text qty changed Details")
         if self.qtyTxtField.text?.count ?? 0 > 0  {
             let qtySel : Double = Double(self.qtyTxtField.text ?? "") ?? 0.0
-            var cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
-            var fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
-            var carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
-            var prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
+            let cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
+            let fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
+            let carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
+            let prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
                 self.caloreLbl.text = String(format: "%.2f kcal", cal)
                 self.calValLbl.text = String(format: "%.2f kcal", cal)
                 self.fatLbl.text = String(format: "Fat %.2f g", fat)
                 self.carboLbl.text = String(format: "Carbohydrate %.2f g", carbo)
                 self.proteinLbl.text = String(format: "Protein %.2f g", prot )
+            self.qtyInGrms.text = String(format:"%.0f",(self.selectedFoodDetails!.serving_weight_grams ?? 0) / self.selectedFoodDetails!.serving_qty * qtySel)
         }
     }
 }

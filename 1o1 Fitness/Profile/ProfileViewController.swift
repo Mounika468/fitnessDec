@@ -655,14 +655,14 @@ class ProfileViewController: UIViewController {
                self.looseBtn.isSelected = false
                 self.looseBtn.setImage(UIImage(named: "cradio"),  for: .normal)
             self.primaryGoal = "maintain weight"
-            case "loose weight":
+            case "lose weight":
             self.looseBtn.isSelected = true
                 self.looseBtn.setImage(UIImage(named: "wradio"),  for: .normal)
              self.gainBtn.isSelected = false
                 self.gainBtn.setImage(UIImage(named: "cradio"),  for: .normal)
                self.maintainBtn.isSelected = false
                 self.maintainBtn.setImage(UIImage(named: "cradio"),  for: .normal)
-            self.primaryGoal = "loose weight"
+            self.primaryGoal = "lose weight"
             case "gain weight":
              self.gainBtn.isSelected = true
                         self.gainBtn.setImage(UIImage(named: "wradio"),  for: .normal)
@@ -886,7 +886,7 @@ class ProfileViewController: UIViewController {
              self.gainBtn.setImage(UIImage(named: "cradio"),  for: .normal)
             self.maintainBtn.isSelected = false
              self.maintainBtn.setImage(UIImage(named: "cradio"),  for: .normal)
-         self.primaryGoal = "loose weight"
+         self.primaryGoal = "lose weight"
         }
     }
     @IBAction func goodBtnTapped(_ sender: Any) {
@@ -1119,12 +1119,12 @@ class ProfileViewController: UIViewController {
             self.countryCode2Btn.isHidden = true
         }
         
-        if self.alcoholYesBtn.isSelected {
-            self.alcoholYesBtn.isSelected = false
-            self.alcoholYesBtn.backgroundColor = UIColor.clear
-            self.alcoholYesBtn.setTitleColor(UIColor.white, for: .normal)
-           // self.NoSelected = true
-        }else {
+//        if self.alcoholYesBtn.isSelected {
+//            self.alcoholYesBtn.isSelected = false
+//            self.alcoholYesBtn.backgroundColor = UIColor.clear
+//            self.alcoholYesBtn.setTitleColor(UIColor.white, for: .normal)
+//           
+//        }else {
             self.alcoholYesBtn.isSelected = true
             self.alcoholYesBtn.backgroundColor = AppColours.appGreen
             self.alcoholYesBtn.setTitleColor(UIColor.black, for: .normal)
@@ -1133,7 +1133,7 @@ class ProfileViewController: UIViewController {
             self.alcoholNoBtn.setTitleColor(UIColor.white, for: .normal)
            // self.NoSelected = false
             self.showHabitsChoice()
-        }
+       // }
     }
     func showHabitsChoice() {
         if self.countryCode2Btn.isHidden == false {

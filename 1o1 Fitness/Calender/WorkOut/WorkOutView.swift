@@ -17,6 +17,8 @@ protocol workOutViewDelegate {
 }
 class WorkOutView: UIView {
 
+    @IBOutlet weak var restLbl: UILabel!
+    @IBOutlet weak var restView: UIView!
     @IBOutlet weak var workOutTableView: UITableView!
     @IBOutlet var contentView: UIView!
     var woViewDelegate: workOutViewDelegate?
@@ -44,14 +46,22 @@ class WorkOutView: UIView {
             workOutTableView.tableFooterView = UIView()
             workOutTableView.separatorColor = UIColor.clear
             self.nodataLbl.isHidden = true
+            self.restLbl.textColor = AppColours.graphYello
     }
     func loadWorkOuts() {
         self.nodataLbl.isHidden = true
+        self.restView.isHidden = true
         self.workOutTableView.reloadData()
     }
     func displayNoWorkouts(message:String) {
         self.nodataLbl.isHidden = false
         self.nodataLbl.text = message
+        self.restView.isHidden = true
+    }
+    func displayRestView(message:String) {
+        self.nodataLbl.isHidden = true
+        //self.nodataLbl.text = message
+        self.restView.isHidden = false
     }
     func checkIfCardioExist()->Bool {
         if let cardio = self.workOutsArr?.cardio {

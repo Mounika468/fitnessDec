@@ -11,6 +11,11 @@ import Alamofire
 
 class BMIBMRViewController: UIViewController {
 
+    @IBOutlet weak var heightLbl: UILabel!
+    @IBOutlet weak var ftLbl: UIButton!
+    @IBOutlet weak var cmLbl: UIButton!
+    @IBOutlet weak var heightView: UIView!
+    @IBOutlet weak var ageValLbl: UILabel!
     @IBOutlet weak var weightView: CardView!
     @IBOutlet weak var tWeightView: CardView!
     @IBOutlet weak var severView: UIView!
@@ -79,6 +84,15 @@ class BMIBMRViewController: UIViewController {
         lineView.layer.cornerRadius = 20
         lineView.layer.borderColor = UIColor.clear.cgColor
         lineView.layer.borderWidth = 1
+        heightView.layer.cornerRadius = 15
+        heightView.layer.borderWidth = 1
+        ageValLbl.layer.cornerRadius = 15
+        ageValLbl.layer.borderWidth = 1
+        lineView.layer.borderColor = AppColours.textGreen.cgColor
+        ageValLbl.textColor = AppColours.textGreen
+        heightLbl.textColor = AppColours.textGreen
+        heightView.layer.borderColor = AppColours.textGreen.cgColor
+        ageValLbl.layer.borderColor = AppColours.textGreen.cgColor
        // view.addSubview(lineView);
 //        weightView.layer.cornerRadius = 15
 //        weightView.layer.borderColor = AppColours.appGreen.cgColor
@@ -102,6 +116,16 @@ class BMIBMRViewController: UIViewController {
     func setupView() {
         let BMIBMRVal = TraineeDetails.traineeDetails?.bmi_bmr
         let targetWeight = (TraineeDetails.traineeDetails?.targetWeight) ?? 0
+        ageValLbl.text =  "\(TraineeDetails.traineeDetails?.age ?? 0)"
+        heightLbl.text = String(format: "%.0f", (TraineeDetails.traineeDetails?.trainee_height?.height ?? 0))
+        if TraineeDetails.traineeDetails?.trainee_height?.metric == "cm" {
+            self.cmLbl.setTitleColor(AppColours.textGreen, for: .normal)
+            self.ftLbl.setTitleColor(.white, for: .normal)
+        }else {
+            self.cmLbl.setTitleColor(.white, for: .normal)
+            self.ftLbl.setTitleColor(AppColours.textGreen, for: .normal)
+        }
+
         self.targetWeight = Double(targetWeight)
         if self.targetWeight == 0.0 {
             self.tWeightView.layer.shadowColor = UIColor.lightText.cgColor

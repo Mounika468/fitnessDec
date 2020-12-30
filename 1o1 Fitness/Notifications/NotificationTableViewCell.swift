@@ -21,6 +21,7 @@ class NotificationTableViewCell: UITableViewCell {
         // Initialization code
         imgView.contentMode = .scaleAspectFill
         imgView.clipsToBounds = true
+        nameLbl.textColor = AppColours.textGreen
         
     }
 

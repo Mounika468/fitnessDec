@@ -12,9 +12,11 @@ struct DayWorkOuts: Decodable {
     let day: Int
     var workouts: [Workouts]?
     var cardio : Cardio?
-    
-    init(day: Int)  {
+    let rest: Bool?
+    init(day: Int,
+         rest: Bool?)  {
                 self.day = day
+        self.rest = rest
     }
     
     init(from decoder: Decoder) throws {
@@ -22,6 +24,7 @@ struct DayWorkOuts: Decodable {
         self.day = try container.decode(Int.self, forKey: .day)
         self.workouts = try container.decodeIfPresent([Workouts].self, forKey: .workouts)
         self.cardio = try container.decodeIfPresent(Cardio.self, forKey: .cardio)
+        self.rest = try container.decodeIfPresent(Bool.self, forKey: .rest)
     }
 }
 extension DayWorkOuts {
@@ -30,6 +33,7 @@ extension DayWorkOuts {
         case day
         case workouts
         case cardio
+        case rest
     }
 }
 //MARK: To parse Workouts

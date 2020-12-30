@@ -234,17 +234,24 @@ extension FoodScanViewController : BarcodeScannerCodeDelegate,BarcodeScannerErro
                 self.fibertxt.text = String(format: "%.2f", food!.nf_dietary_fiber ?? 0.0)
                 self.sugarsTxt.text = String(format: "%.2f", food!.nf_sugars ?? 0.0)
                 self.proteinTxt.text = String(format: "%.2f", food!.nf_protein ?? 0.0)
-           }
-               
-                    LoadingOverlay.shared.hideOverlayView()
-                 //  self.resTblView.reloadData()
-                controller.dismiss(animated: false, completion: nil)
+                LoadingOverlay.shared.hideOverlayView()
+            controller.dismiss(animated: false, completion: nil)
+            }else {
+                DispatchQueue.main.async {
+                self.presentAlertWithTitle(title: "", message: "No data found", options: "OK") { (_) in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                }
+            }
                }
               }, errorHandler: {  error in
                       print(" error \(error)")
                       DispatchQueue.main.async {
                           LoadingOverlay.shared.hideOverlayView()
                         controller.dismiss(animated: false, completion: nil)
+                        self.presentAlertWithTitle(title: "", message: "No data found", options: "OK") { (_) in
+                            self.navigationController?.popViewController(animated: true)
+                        }
                       }
               })
       

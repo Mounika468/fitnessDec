@@ -93,8 +93,10 @@ class BillingAddressVC: UIViewController {
                 }
             }else {
                 DispatchQueue.main.async {
-                    self?.presentAlertWithTitle(title: "Error", message: "Fetching Addresses failed", options: "OK") { (option) in
-                    }
+//                    self?.presentAlertWithTitle(title: "Error", message: "No Addresses found", options: "OK") { (option) in
+//                    }
+                    self?.addressArra = nil
+                    self?.addressTblView.reloadData()
                 }
             }
             DispatchQueue.main.async {

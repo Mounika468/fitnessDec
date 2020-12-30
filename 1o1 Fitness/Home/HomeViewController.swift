@@ -161,6 +161,7 @@ class HomeViewController: UIViewController {
          self.getTrainerInfo()
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = true
+        self.searchBar.text = ""
 //       // self.navigateToProfile()
 //        let storyboard = UIStoryboard(name: "StartVC", bundle: nil)
 //        let controller = storyboard.instantiateViewController(withIdentifier: "startVC") as! StartViewController
@@ -324,6 +325,7 @@ class HomeViewController: UIViewController {
             TraineeInfo.details.mobile_no = TraineeDetails.traineeDetails?.mobile_no ?? ""
             TraineeInfo.details.country_code = TraineeDetails.traineeDetails?.country_code ?? ""
             TraineeInfo.details.traineeProfileImg = TraineeDetails.traineeDetails?.traineeProfileImg?.profileImagePath ?? ""
+            TraineeInfo.details.notificationCount = TraineeDetails.traineeDetails?.notificationCount ?? 0
             if let id = UserDefaults.standard.string(forKey: UserDefaultsKeys.subId) {
                                    ProgramDetails.programDetails.subId = id
                                }
@@ -353,8 +355,6 @@ class HomeViewController: UIViewController {
               LoadingOverlay.shared.hideOverlayView()
             if  TraineeInfo.details.traineeProfileImg.count > 0 {
                 self?.profileBtn.sd_setImage(with: URL(string: TraineeInfo.details.traineeProfileImg)!, for: .normal, completed: nil)
-//                self?.profileBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (self?.profileBtn.bounds.width ?? 0) - (self?.profileBtn.bounds.height ?? 0))
-               // self?.profileBtn.imageView?.layer.cornerRadius = self?.profileBtn.bounds.height ?? 0/2.0
                 self?.profileBtn.layer.cornerRadius = 0.5 * (self?.profileBtn.bounds.size.width ?? 0)
                 self?.profileBtn.clipsToBounds = true
             }else {
@@ -362,13 +362,24 @@ class HomeViewController: UIViewController {
                 self?.profileBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                 self?.profileBtn.imageView?.layer.cornerRadius = 0
             }
-          //  if ProgramDetails.programDetails.programId.count == 0 {
                 let indexPath = IndexPath(item: 1, section: 0)
+            DispatchQueue.main.async {
                 self?.headerCollectionView.reloadItems(at: [indexPath])
-                //CollectionView.reloadItems(at: IndexPath])
-           // }
+            }
             self?.weightLbl.attributedText = myMutableString
-            
+            if  TraineeInfo.details.notificationCount > 0 {
+                if let tabItems = self?.tabBarController?.tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    let tabItem = tabItems[3]
+                    tabItem.badgeValue = "\(TraineeInfo.details.notificationCount)"
+                }
+            }else {
+                if let tabItems = self?.tabBarController?.tabBar.items {
+                    // In this case we want to modify the badge number of the third tab:
+                    let tabItem = tabItems[3]
+                    tabItem.badgeValue = nil
+                }
+            }
             let phoneAlertDisplayed = UserDefaults.standard.bool(forKey:"PhoneAlertDisplayed")
             if  phoneAlertDisplayed == false {
                 if  TraineeInfo.details.mobile_no.count == 0 {
@@ -455,32 +466,6 @@ extension HomeViewController: UITabBarControllerDelegate,UITabBarDelegate {
 //            return true
 //        }
     }
-    
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        let tabBarIndex = tabBarController.selectedIndex
-//        if tabBarIndex == 1 || tabBarIndex == 3 {
-//         self.presentAlert()
-//            return false
-//        }else {
-//            return true
-//        }
-//   }
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//      //  let tabBarIndex = tabBar.in
-//        if tabBar.inde == 1 || item == 3 {
-//         self.presentAlert()
-//          //  return false
-//        }else {
-//          //  return true
-//        }
-//    }
-//
-//     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//           let tabBarIndex = tabBarController.selectedIndex
-//           if tabBarIndex == 1 || tabBarIndex == 3 {
-//            self.presentAlert()
-//           }
-//      }
 }
 
 extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {

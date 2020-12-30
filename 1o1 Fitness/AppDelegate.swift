@@ -28,12 +28,10 @@ var window: UIWindow?
         TraineeInfo.details = TraineeInfo()
         TraineeDetails.traineeDetails = nil
         IQKeyboardManager.shared.enable = true
-        self.registerForPushNotifications()
         FirebaseApp.configure()
-        Messaging.messaging().subscribe(toTopic: "weather") { error in
-          print("Subscribed to weather topic")
-        }
         Messaging.messaging().delegate = self
+        self.registerForPushNotifications()
+       
 
         return true
     }
@@ -90,15 +88,17 @@ var window: UIWindow?
         UIApplication.shared.registerForRemoteNotifications()
       //  updateFirestorePushTokenIfNeeded()
     }
-//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-//        print(remoteMessage.appData)
-//    }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
        // updateFirestorePushTokenIfNeeded()
         let dataDict:[String: String] = ["token": fcmToken ]
         Token.setToken(fcmToken: fcmToken)
           NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert,.sound])
+        
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

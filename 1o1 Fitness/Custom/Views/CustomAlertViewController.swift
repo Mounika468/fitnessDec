@@ -21,6 +21,8 @@ enum AlertType{
 }
 class CustomAlertViewController: UIViewController {
 
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var alertView: CardView!
     @IBOutlet weak var okBtn: UIButton!
     @IBOutlet weak var successView: CardView!
@@ -57,15 +59,19 @@ class CustomAlertViewController: UIViewController {
 //        keepBrowseBtn.layer.cornerRadius = 15.0
 //        keepBrowseBtn.layer.borderWidth = 1.0
         keepBrowseBtn.layer.borderColor = AppColours.textGreen.cgColor
-        keepBrowseBtn.drawBorder(edges:[.top,.bottom] , borderWidth: 0.5, color: AppColours.lineColor, margin: 0)
-         singUpBtn.drawBorder(edges:[.left,.top,.bottom] , borderWidth: 0.5, color: AppColours.lineColor, margin: 0)
+       // keepBrowseBtn.drawBorder(edges:[.top,.bottom] , borderWidth: 0.5, color: AppColours.lineColor, margin: 0)
+         singUpBtn.drawBorder(edges:[.left] , borderWidth: 0.5, color: AppColours.lineColor, margin: 0)
            setUpAlertView()
         self.messageLbl.text = message
         okBtn.setTitleColor(AppColours.textGreen, for: .normal)
         okBtn.layer.borderWidth = 0.4
         //okBtn.layer.opacity = 0.6
         okBtn.layer.borderColor = AppColours.lineColor.cgColor
-          
+        self.topView.backgroundColor = AppColours.lineColor
+        self.topView.alpha = 0.5
+        self.bottomView.alpha = 0.5
+        self.bottomView.backgroundColor = AppColours.lineColor
+        
        }
     func displaySuccessView(){
         

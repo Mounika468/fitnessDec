@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class NotificationsViewController: UIViewController {
 
@@ -47,7 +48,7 @@ class NotificationsViewController: UIViewController {
     }
     func reloadPrograms() {
         self.notificationTbleView.reloadData()
-        self.tblHeightConstraint.constant = CGFloat((self.notificationsArr?.count ?? 0) * 85 + 40)
+        self.tblHeightConstraint.constant = CGFloat((self.notificationsArr?.count ?? 0) * 85 + 100)
     }
     func getMyNotifications() {
         LoadingOverlay.shared.showOverlay(view: self.view)
@@ -74,15 +75,64 @@ class NotificationsViewController: UIViewController {
                     self?.nodataLbl.isHidden = false
                 }
             }
+            self?.postCallForNotifying()
             
         } errorHandler: { (error) in
             DispatchQueue.main.async {
             LoadingOverlay.shared.hideOverlayView()
-                self.presentAlertWithTitle(title: "Error", message:"\(error.errorDescription)", options: "OK") {[weak self] (_) in
+                self.presentAlertWithTitle(title: "Error", message:"\(error.localizedDescription)", options: "OK") {[weak self] (_) in
                     self?.notificationsArr = nil
                     self?.reloadPrograms()
                     self?.nodataLbl.isHidden = true
             }
+            }
+        }
+    }
+    func postCallForNotifying() {
+        let postBody : [String: Any] = ["trainee_id":UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!]
+        DispatchQueue.main.async {
+            LoadingOverlay.shared.showOverlay(view: UIApplication.shared.windows.first!)
+        }
+        let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
+        if token == nil {
+            AWSUserSingleton.shared.getUserattributes()
+        }
+        var authenticatedHeaders: [String: String] {
+            [
+                HeadersKeys.authorization: "\(HeaderValues.token) \(token!) "
+                
+            ]
+        }
+        
+        let urlString = postNotificationsURL
+        guard let url = URL(string: urlString) else {return}
+        var request        = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("\(HeaderValues.token) \(token!) ", forHTTPHeaderField: "Authorization")
+        do {
+            request.httpBody   = try JSONSerialization.data(withJSONObject: postBody)
+        } catch let error {
+            print("Error : \(error.localizedDescription)")
+        }
+        Alamofire.request(request).responseJSON{ (response) in
+            
+            print("response is \(response)")
+            DispatchQueue.main.async {
+                LoadingOverlay.shared.hideOverlayView()
+            }
+            
+            if let status = response.response?.statusCode {
+                switch(status){
+                case 200:
+                    if (response.result.value as? [String: Any]) != nil {
+                    }
+                    
+                default:
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
             }
         }
     }
@@ -112,6 +162,7 @@ extension NotificationsViewController: UITableViewDelegate,UITableViewDataSource
         }
         cell.nameLbl.text = self.notificationsArr?[indexPath.row].notificationHeader ?? ""
         cell.detailLbl.text = self.notificationsArr?[indexPath.row].message ?? ""
+        cell.timeLbl.text = self.notificationsArr?[indexPath.row].time ?? ""
         return cell
     }
 }

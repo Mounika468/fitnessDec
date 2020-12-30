@@ -72,6 +72,7 @@ let getSuccessDetailsAPI = "\(devHostURL)traineeservice/api/trainees/"
 
 //Notifications API
 let getNotificationsAPI = "\(devHostURL)notificationservice/api/notifications/notification/"
+let postNotificationsURL = "\(devHostURL)/notificationservice/api/notifications/notification?requestedBy=Trainee"
 
 //Contactsus API
 let getcontactUs = "\(devHostURL)traineeservice/api/trainees/request/types"

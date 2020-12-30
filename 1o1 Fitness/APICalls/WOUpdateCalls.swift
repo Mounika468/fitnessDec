@@ -31,12 +31,12 @@ final class WOUpdateCalls: API {
                     }else {
                         if let jsonMessage = json[ResponseKeys.message.rawValue] {
                             messageString = (jsonMessage as? String)!
-                            successHandler(DayWorkOuts(day: 0))
+                            successHandler(DayWorkOuts(day: 0, rest: false))
                         }
                     }
                    
                 } else {
-                    successHandler(DayWorkOuts(day: 0))
+                    successHandler(DayWorkOuts(day: 0, rest: false))
                 }
             } catch let error {
                 errorHandler(APIError.invalidResponse(ErrorMessage("error.parsing")))

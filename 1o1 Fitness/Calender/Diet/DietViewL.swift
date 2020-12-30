@@ -36,6 +36,7 @@ class DietViewL: UIView {
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var carbsLbl: UILabel!
     
+    @IBOutlet weak var mlLbl: UILabel!
     @IBOutlet weak var fatLbl: UILabel!
     @IBOutlet weak var proteinLbl: UILabel!
     
@@ -110,7 +111,7 @@ class DietViewL: UIView {
         self.qty500Lbl.textColor = AppColours.graphBlue
         self.qty750Lbl.textColor = AppColours.graphBlue
          configureHalfCircularProgress()
-        self.waterQtyLbl.text = "0 "
+        self.waterQtyLbl.text = "0"
        }
     func reloadDietView() {
         self.numberOfRows()
@@ -120,6 +121,31 @@ class DietViewL: UIView {
         let height = self.foodTblView.frame.minY + self.tbleHeightConstraint.constant
         if self.dietSelection == .water {
             self.dietviewDelegate?.setParentViewHeight(height: 1000)
+            let water = self.diet?.mealplan?.waterConsumed
+            if water != nil {
+                self.waterQtyLbl.text = "\(water!.consumed)"
+                self.mlLbl.isHidden = false
+                if water?.consumed ?? 0 == 0 {
+                    self.jugImgView.image = UIImage(named: "nowater")
+                }else {
+                    let imageName =  "\(water!.consumed)"
+                    self.jugImgView.image = UIImage(named: String(imageName))
+                }
+               
+                let dob = String(water!.lastUpdatedOn.prefix(10)) as String
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                let date = dateFormatter.date(from: dob)
+                let date1 = Date.getDateInFormat(format: "MMM d, yyyy", date: date!)
+              // self.dob.setTitle(date1, for: .normal)
+                
+                self.lastUpdateLbl.text = "Last Update \(date1)"
+            }else {
+                self.jugImgView.image = UIImage(named: "nowater")
+                self.waterQtyLbl.text = ""
+                self.mlLbl.isHidden = true
+            }
         }else {
              self.dietviewDelegate?.setParentViewHeight(height: height)
         }
@@ -268,6 +294,7 @@ class DietViewL: UIView {
             let water = self.diet?.mealplan?.waterConsumed
             if water != nil {
                 self.waterQtyLbl.text = "\(water!.consumed)"
+                self.mlLbl.isHidden = false
                 if water?.consumed ?? 0 == 0 {
                     self.jugImgView.image = UIImage(named: "nowater")
                 }else {
@@ -286,6 +313,8 @@ class DietViewL: UIView {
                 self.lastUpdateLbl.text = "Last Update \(date1)"
             }else {
                 self.jugImgView.image = UIImage(named: "nowater")
+                self.mlLbl.isHidden = true
+                self.waterQtyLbl.text = ""
             }
              
         default:

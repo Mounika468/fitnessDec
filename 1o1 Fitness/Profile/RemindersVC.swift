@@ -83,9 +83,9 @@ class RemindersVC: UIViewController {
     }
     
     @objc func mealsViewTouched(_ sender: UITapGestureRecognizer) {
-        let storyboard = UIStoryboard(name: "MealEditViewController", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "MealEditViewController")
-        self.navigationController?.pushViewController(controller, animated: true)
+//        let storyboard = UIStoryboard(name: "MealEditViewController", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: "MealEditViewController")
+//        self.navigationController?.pushViewController(controller, animated: true)
         
     }
     
