@@ -28,6 +28,9 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var profileBtn: UIButton!
     @IBOutlet weak var locBtn: UIButton!
+    var loadingView: LoadingReusableView?
+    var pageNumber : Int = 0
+    var isLoading = false
     @IBOutlet weak var trainersCollectionView: UICollectionView! {
         didSet {
             trainersCollectionView.showsVerticalScrollIndicator = false
@@ -56,6 +59,10 @@ class HomeViewController: UIViewController {
         self.headerCollectionView.register(nib, forCellWithReuseIdentifier:"headerCV")
          let trainerNib = UINib(nibName: "HomeTrainerCollectionViewCell", bundle: nil)
         self.trainersCollectionView.register(trainerNib, forCellWithReuseIdentifier:"HomeProfileCV")
+        //Register Loading Reuseable View
+        let loadingReusableNib = UINib(nibName: "LoadingReusableView", bundle: nil)
+        self.trainersCollectionView.register(loadingReusableNib, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "loadingresuableviewid")
+        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         self.headerCollectionView.collectionViewLayout = flowLayout
@@ -158,6 +165,8 @@ class HomeViewController: UIViewController {
     }
     */
     override func viewWillAppear(_ animated: Bool) {
+        self.isLoading = false
+        self.pageNumber = 0
          self.getTrainerInfo()
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = true
@@ -201,11 +210,14 @@ class HomeViewController: UIViewController {
         DispatchQueue.main.async {
             LoadingOverlay.shared.showOverlay(view: window)
         }
-        
-        TrainerbyLocationAPI.postCalltoToken(parameters: location, details: "partial") { [weak self] trainerInfo  in
+       
+        TrainerbyLocationAPI.postCalltoToken(parameters: location, details: "partial", pageNumber: 0) { [weak self] trainerInfo  in
             if trainerInfo.count > 0 {
                 self?.trainersInfo = trainerInfo
-                DispatchQueue.main.async {
+                self?.pageNumber = self!.pageNumber + 1
+                DispatchQueue.main.async { [self] in
+                    self?.isLoading = false
+//                    self?.trainersCollectionView.collectionViewLayout.invalidateLayout()
                     self?.trainersCollectionView.reloadData()
                     LoadingOverlay.shared.hideOverlayView()
                 }
@@ -214,7 +226,7 @@ class HomeViewController: UIViewController {
                     LoadingOverlay.shared.hideOverlayView()
                     self?.presentAlertWithTitle(title: "", message: "No trainer found.", options: "OK") {_ in
                     }
-                    
+                    self?.isLoading = true
                 }
             }
             let userdefaults = UserDefaults.standard
@@ -236,6 +248,7 @@ class HomeViewController: UIViewController {
             print(" error \(error)")
             DispatchQueue.main.async {
                 LoadingOverlay.shared.hideOverlayView()
+                self?.isLoading = true
             }
             let userdefaults = UserDefaults.standard
             if let savedValue = userdefaults.string(forKey: UserDefaultsKeys.guestLogin) {
@@ -532,6 +545,132 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
         
        
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == self.trainersCollectionView && self.trainersInfo?.count ?? 0 > 2{
+            if indexPath.row == self.trainersInfo!.count  - 1 && !self.isLoading {
+               // self.isLoading = true
+                loadMoreData()
+            }
+        }
+       
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        if collectionView == self.trainersCollectionView {
+//        if self.isLoading {
+//            return CGSize.zero
+//        } else {
+//            return CGSize(width: collectionView.bounds.size.width, height: 55)
+//        }
+//        }else {
+//            return CGSize.zero
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        if collectionView == self.trainersCollectionView {
+//        if kind == UICollectionView.elementKindSectionFooter {
+//            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingresuableviewid", for: indexPath) as! LoadingReusableView
+//            loadingView = aFooterView
+//            loadingView?.backgroundColor = UIColor.clear
+//            return aFooterView
+//        }
+//        return UICollectionReusableView()
+//        }else {
+//            return UICollectionReusableView()
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+//        if collectionView == self.trainersCollectionView {
+//        if elementKind == UICollectionView.elementKindSectionFooter {
+//            self.loadingView?.activityIndicator.startAnimating()
+//        }
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+//        if collectionView == self.trainersCollectionView {
+//        if elementKind == UICollectionView.elementKindSectionFooter {
+//            self.loadingView?.activityIndicator.stopAnimating()
+//        }
+//        }
+//    }
+    
+    func loadMoreData() {
+        if !self.isLoading {
+            self.isLoading = true
+//            let start = self.trainersInfo!.count + 1
+//            let end = start + 20
+        //    DispatchQueue.global().async {
+                // fake background loading task
+              //  sleep(2)
+//                for _ in start...end {
+//                    self.itemsArray.append(self.getRandomColor())
+//                }
+                let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
+                if token == nil {
+                    AWSUserSingleton.shared.getUserattributes()
+                }
+                var authenticatedHeaders: [String: String] {
+                    [
+                        HeadersKeys.authorization: "\(HeaderValues.token) \(token!) ",
+                        HeadersKeys.contentType: HeaderValues.json
+                    ]
+                }
+                
+                let country = LocationSingleton.sharedInstance.country ?? ""
+                let lat = LocationSingleton.sharedInstance.lastLocation?.coordinate.latitude.description as? String ?? ""
+                let long = LocationSingleton.sharedInstance.lastLocation?.coordinate.longitude.description as? String ?? ""
+                let location: [String: String] = [
+                    "latitude" :lat,
+                    "longitude" : long
+                ]  //17.46646962576084, 78.37609064592026
+//            let location: [String: String] = [
+//                "latitude" :"17.46646962576084",
+//                "longitude" :  "78.37609064592026"
+//            ]
+                let window = UIApplication.shared.windows.first!
+                DispatchQueue.main.async {
+                    LoadingOverlay.shared.showOverlay(view: window)
+                }
+                TrainerbyLocationAPI.postCalltoToken(parameters: location, details: "partial", pageNumber: self.pageNumber) { [weak self] trainerInfo  in
+                    if trainerInfo.count > 0 {
+                        self?.trainersInfo?.append(contentsOf: trainerInfo)
+                       // self?.trainersInfo = trainerInfo
+                        self?.pageNumber = self!.pageNumber + 1
+                        DispatchQueue.main.async { [self] in
+                            self?.isLoading = false
+//                            self?.trainersCollectionView.collectionViewLayout.invalidateLayout()
+                            self?.trainersCollectionView.reloadData()
+                            LoadingOverlay.shared.hideOverlayView()
+                        }
+                    }else {
+                        DispatchQueue.main.async {
+                            LoadingOverlay.shared.hideOverlayView()
+//                            self?.presentAlertWithTitle(title: "", message: "No trainer found.", options: "OK") {_ in
+//                            }
+                            self?.trainersCollectionView.reloadData()
+                            self?.isLoading = true
+                        }
+                    }
+
+                } errorHandler: { [weak self] error in
+                    print(" error \(error)")
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.hideOverlayView()
+                    }
+                    DispatchQueue.main.async {
+                        self?.trainersCollectionView.reloadData()
+                        self?.isLoading = true
+                    }
+                }
+                
+          //  }
+        }
+    }
+
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
@@ -865,6 +1004,8 @@ extension HomeViewController: UISearchBarDelegate {
         
         let searchText = self.searchBar.text ?? ""
         if searchText.count == 0 { // If no search text is entered
+            self.isLoading = false
+            self.pageNumber = 0
             self.getTrainerInfo()
         }else {
             let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)

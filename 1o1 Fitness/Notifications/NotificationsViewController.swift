@@ -48,7 +48,7 @@ class NotificationsViewController: UIViewController {
     }
     func reloadPrograms() {
         self.notificationTbleView.reloadData()
-        self.tblHeightConstraint.constant = CGFloat((self.notificationsArr?.count ?? 0) * 85 + 100)
+        self.tblHeightConstraint.constant = CGFloat((self.notificationsArr?.count ?? 0) * 85 + 150)
     }
     func getMyNotifications() {
         LoadingOverlay.shared.showOverlay(view: self.view)

@@ -21,6 +21,8 @@ class TrainersListViewController: UIViewController {
     var trainersInfo : [TrainerInfo]?
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBtn: UIButton!
+    var pageNumber : Int = 0
+    var isLoading = false
     override func viewDidLoad() {
        super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
@@ -52,6 +54,8 @@ class TrainersListViewController: UIViewController {
     }
     override func viewDidAppear(_ _animated: Bool)
     {
+        self.isLoading = false
+        self.pageNumber = 0
         self.getTrainersInfo()
         if self.searchBar.isFirstResponder {
             self.searchBar.resignFirstResponder()
@@ -75,16 +79,19 @@ class TrainersListViewController: UIViewController {
                                            ]
                          }
 
-            GetTrainersAPI.post(parameters:[:],header:authenticatedHeaders, successHandler: { [weak self] trainerInfo  in
+        GetTrainersAPI.post(parameters:[:], pageNumber: self.pageNumber,header:authenticatedHeaders, successHandler: { [weak self] trainerInfo  in
                       self?.trainersInfo = trainerInfo
+            self?.pageNumber = self!.pageNumber + 1
                       print(" success response \(trainerInfo)")
                     DispatchQueue.main.async {
+                        self?.isLoading = false
                         self?.profileCV.reloadData()
                         LoadingOverlay.shared.hideOverlayView()
                     }
                   }) { [weak self] error in
                       print(" error \(error)")
                     DispatchQueue.main.async {
+                        self?.isLoading = true
                            LoadingOverlay.shared.hideOverlayView()
                            }
                   }
@@ -177,6 +184,69 @@ extension TrainersListViewController: UICollectionViewDelegate,UICollectionViewD
         controller.trainersInfo = trainer
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == self.profileCV && self.trainersInfo?.count ?? 0 > 2{
+            if indexPath.row == self.trainersInfo!.count  - 1 && !self.isLoading {
+               // self.isLoading = true
+                loadMoreData()
+            }
+        }
+       
+    }
+    func loadMoreData() {
+        if !self.isLoading {
+            self.isLoading = true
+//            let start = self.trainersInfo!.count + 1
+//            let end = start + 20
+        //    DispatchQueue.global().async {
+                // fake background loading task
+              //  sleep(2)
+//                for _ in start...end {
+//                    self.itemsArray.append(self.getRandomColor())
+//                }
+                let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
+                if token == nil {
+                    AWSUserSingleton.shared.getUserattributes()
+                }
+                var authenticatedHeaders: [String: String] {
+                    [
+                        HeadersKeys.authorization: "\(HeaderValues.token) \(token!) ",
+                        HeadersKeys.contentType: HeaderValues.json
+                    ]
+                }
+                
+               
+                let window = UIApplication.shared.windows.first!
+                DispatchQueue.main.async {
+                    LoadingOverlay.shared.showOverlay(view: window)
+                }
+            GetTrainersAPI.post(parameters:[:], pageNumber: self.pageNumber,header:authenticatedHeaders, successHandler: { [weak self] trainerInfo  in
+                if trainerInfo.count > 0 {
+                    self?.trainersInfo?.append(contentsOf: trainerInfo)
+                   // self?.trainersInfo = trainerInfo
+                    self?.pageNumber = self!.pageNumber + 1
+                    DispatchQueue.main.async {
+                        self?.isLoading = false
+                        self?.profileCV.reloadData()
+                        LoadingOverlay.shared.hideOverlayView()
+                    }
+                }else {
+                    DispatchQueue.main.async {
+                        LoadingOverlay.shared.hideOverlayView()
+                        self?.profileCV.reloadData()
+                        self?.isLoading = true
+                    }
+                }
+                print(" success response \(trainerInfo)")
+                      }) { [weak self] error in
+                          print(" error \(error)")
+                        DispatchQueue.main.async {
+                            self?.isLoading = true
+                               LoadingOverlay.shared.hideOverlayView()
+                               }
+                      }
+        }
+    }
    
 }
 extension UIImage {
@@ -229,6 +299,8 @@ extension TrainersListViewController: UISearchBarDelegate {
         
         let searchText = self.searchBar.text ?? ""
         if searchText.count == 0 { // If no search text is entered
+            self.isLoading = false
+            self.pageNumber = 0
             self.getTrainersInfo()
         }else {
             let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)

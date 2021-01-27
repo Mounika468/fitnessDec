@@ -138,7 +138,30 @@ class FoodScanViewController: UIViewController {
                 }
             }
             if self.foodNameTxt.text?.count ?? 0 > 0 && self.servingSizeTxt.text?.count ?? 0 > 0 && self.fatTxt.text?.count ?? 0 > 0 && self.carboTxt.text?.count ?? 0 > 0 && self.proteinTxt.text?.count ?? 0 > 0  && self.caloriesTxt.text?.count ?? 0 > 0 {
-                let foodItem : NutritionixFoodData = NutritionixFoodData(food_name:  self.foodNameTxt.text!, serving_unit:  self.selectedFoodDetails?.serving_unit ?? "", nix_brand_id: self.selectedFoodDetails?.nix_brand_id, brand_name_item_name: self.selectedFoodDetails?.brand_name_item_name, serving_qty: Double(self.servingSizeTxt.text!)!, nf_calories: Double(self.caloriesTxt.text!)!, photo: self.selectedFoodDetails?.photo, locale: "", brand_name: self.brandNameTxt.text ?? "", brand_type: self.selectedFoodDetails?.brand_type, region: self.selectedFoodDetails?.region, nix_item_id: self.selectedFoodDetails?.nix_item_id, nix_brand_name: self.selectedFoodDetails?.nix_brand_name, nix_item_name: self.selectedFoodDetails?.nix_item_name, serving_weight_grams: self.selectedFoodDetails?.serving_weight_grams, nf_total_fat: Double(self.fatTxt.text ?? ""), nf_saturated_fat: Double(self.saturatedTxt.text ?? ""), nf_cholesterol: Double(self.choleTxt.text ?? ""), nf_sodium: Double(self.sodiumTxt.text ?? ""), nf_total_carbohydrate: Double(self.carboTxt.text ?? ""), nf_dietary_fiber: Double(self.fibertxt.text ?? ""), nf_sugars: Double(self.sugarsTxt.text ?? ""), nf_protein: Double(self.proteinTxt.text ?? ""), nf_potassium: self.selectedFoodDetails?.nf_potassium, nf_p: self.selectedFoodDetails?.nf_p, alt_measures: self.selectedFoodDetails?.alt_measures, upc: self.selectedUPC,time:(dateFormatter.string(from: NSDate() as Date)), createdBy:"trainee",foodStatus:"new")
+                let size = self.servingSizeTxt.text?.components(separatedBy: " ")
+                let serving = (size?[0])!
+                let calories = self.caloriesTxt.text?.components(separatedBy: " ")
+                let calory = (calories?[0])!
+                let fat = self.fatTxt.text?.components(separatedBy: " ")
+                let fats = (fat?[0])!
+                let satFat = saturatedTxt.text?.components(separatedBy: " ")
+                let satuFat = (satFat?[0])!
+                let chole = self.choleTxt.text?.components(separatedBy: " ")
+                let cholest = (chole?[0])!
+                let sodiums = self.sodiumTxt.text?.components(separatedBy: " ")
+                let sodium = (sodiums?[0])!
+                let totalCarb = self.carboTxt.text?.components(separatedBy: " ")
+                let carbs = (totalCarb?[0])!
+                let dFiber = self.fibertxt.text?.components(separatedBy: " ")
+                let dfib = (dFiber?[0])!
+                let sugurs = self.sugarsTxt.text?.components(separatedBy: " ")
+                let dsug = (sugurs?[0])!
+                let protien = proteinTxt.text?.components(separatedBy: " ")
+                let dprot = (protien?[0])!
+//                let protien = proteinTxt.text?.components(separatedBy: " ")
+//                let dprot = (protien?[0])!
+                
+                let foodItem : NutritionixFoodData = NutritionixFoodData(food_name:  self.foodNameTxt.text!, serving_unit:  self.selectedFoodDetails?.serving_unit ?? "", nix_brand_id: self.selectedFoodDetails?.nix_brand_id, brand_name_item_name: self.selectedFoodDetails?.brand_name_item_name, serving_qty: Double(serving)!, nf_calories: Double(calory)!, photo: self.selectedFoodDetails?.photo, locale: "", brand_name: self.brandNameTxt.text ?? "", brand_type: self.selectedFoodDetails?.brand_type, region: self.selectedFoodDetails?.region, nix_item_id: self.selectedFoodDetails?.nix_item_id, nix_brand_name: self.selectedFoodDetails?.nix_brand_name, nix_item_name: self.selectedFoodDetails?.nix_item_name, serving_weight_grams: self.selectedFoodDetails?.serving_weight_grams, nf_total_fat: Double(fats), nf_saturated_fat: Double(satuFat), nf_cholesterol: Double(cholest), nf_sodium: Double(sodium), nf_total_carbohydrate: Double(carbs), nf_dietary_fiber: Double(dfib), nf_sugars: Double(dsug), nf_protein: Double(dprot), nf_potassium: self.selectedFoodDetails?.nf_potassium, nf_p: self.selectedFoodDetails?.nf_p, alt_measures: self.selectedFoodDetails?.alt_measures, upc: self.selectedUPC,time:(dateFormatter.string(from: NSDate() as Date)), createdBy:"trainee",foodStatus:"new")
                 
                 let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
                 var authenticatedHeaders: [String: String] {
@@ -368,12 +391,17 @@ extension FoodScanViewController: UITextFieldDelegate {
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == self.servingSizeTxt   {
+            
             let maxLength = 4
                let currentString: NSString = textField.text! as NSString
             let newString: NSString =
                 currentString.replacingCharacters(in: range, with: string) as NSString
             return newString.length <= maxLength
+        }else {
+            let allowedCharacters = CharacterSet.decimalDigits
+                let characterSet = CharacterSet(charactersIn: string)
+                return allowedCharacters.isSuperset(of: characterSet)
         }
-        return true
+        //return true
     }
 }

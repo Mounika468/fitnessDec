@@ -23,55 +23,83 @@ final class LandingViewController : BaseViewController {
      var isLoading : Bool = false
     let ciImages = [
         UIImage(named: "b_exercise"),
-        UIImage(named: "s_zumba"),
-        UIImage(named: "")
+        UIImage(named: "b_zumba"),
+        UIImage(named: "b_zumba")
     ]
-//    var timer: Timer?
-//    var duration : Float = 0.25
+    var timer: Timer?
+    var leftTimer: Timer?
+    var rightTimer: Timer?
+    var duration : Float = 0.25
     override func viewDidLoad() {
            super.viewDidLoad()
 
            // Do any additional setup after loading the view.
            
            self.centreImgView.image =  UIImage(named: "b_exercise")
-           setupButtonsBackgrounds()
-      //  timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector:#selector(displayImgView1), userInfo: nil, repeats: true)
-      
-       // userdefaults.set(UserDefaultsKeys.authUser, forKey:UserDefaultsKeys.guestLogin)
-       }
-//    @objc func displayImgView1()
-//    {
-//        if rightCount != 1 || leftCount == 0 {
-//            self.rightBtnTapped(rightBtn!)
-//        }else {
-//            self.leftBtnTapped(leftBtn!)
-//        }
-////        if (duration / 0.25) == 0 {
-////            self.rightBtn.setImage(UIImage(named: "s_zumba"), for: .normal)
-////            self.leftBtn.setImage(UIImage(named: "s_excercise"), for: .normal)
-////            self.centreImgView.image = UIImage(named: "b_yoga")
-////        }else if (duration / 0.5) == 0 {
-////            self.rightBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
-////            self.leftBtn.setImage(UIImage(named: ""), for: .normal)
-////            self.centreImgView.image = UIImage(named: "b_zumba")
-////        }else if (duration / 0.75) == 0 {
-////            self.rightBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
-////            self.leftBtn.setImage(UIImage(named: ""), for: .normal)
-////            self.centreImgView.image = UIImage(named: "b_zumba")
-////        }
-//    }
-       private func setupButtonsBackgrounds()
-       {
+          // setupButtonsBackgrounds()
+       
+        self.startImageTimer()
+        NotificationCenter.default.addObserver(self, selector: #selector(backgroundHandler), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(foregroundHandler), name: UIApplication.willEnterForegroundNotification, object: nil)
 
-//           self.loginBtn.backgroundColor = UIColor(red: 10/255, green: 158/255, blue: 93/255, alpha: 1.0)
-//           self.loginBtn.layer.cornerRadius = 8.0
-//           self.singupBtn.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
-//           self.singupBtn.layer.cornerRadius = 8.0
-//           self.exploreBtn.backgroundColor = UIColor(red: 146/255, green: 114/255, blue: 28/255, alpha: 1.0)
-//           self.exploreBtn.layer.cornerRadius = 8.0
-        self.leftBtn.isHidden = false
-           
+
        }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        timer?.invalidate()
+        timer = nil
+//        self.leftTimer?.invalidate()
+//        self.rightTimer?.invalidate()
+    }
+    @objc func displayImgView1()
+    {
+        if self.centreImgView.image == UIImage(named: "b_exercise") {
+            self.rightBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
+            self.leftBtn.setImage(UIImage(named: "s_excercise"), for: .normal)
+            self.centreImgView.image = UIImage(named: "b_zumba")
+        }else if self.centreImgView.image == UIImage(named: "b_zumba") {
+            self.rightBtn.setImage(UIImage(named: "s_excercise"), for: .normal)
+            self.leftBtn.setImage(UIImage(named: "s_zumba"), for: .normal)
+            self.centreImgView.image = UIImage(named: "b_yoga")
+        }else if self.centreImgView.image == UIImage(named: "b_yoga") {
+            self.rightBtn.setImage(UIImage(named: "s_zumba"), for: .normal)
+            self.leftBtn.setImage(UIImage(named: "s_yoga"), for: .normal)
+            self.centreImgView.image = UIImage(named: "b_exercise")
+        }
+    }
+   
+    private func startImageTimer() {
+        
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector:#selector(displayImgView1), userInfo: nil, repeats: true)
+        
+//        imageTimer = Timer(fire: Date(), interval: 5, repeats: true) { (timer) in
+//            imageView.image = images.randomElement()
+//        }
+
+        RunLoop.main.add(timer!, forMode: .common)
+    }
+    
+   
+    @objc private func backgroundHandler() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    @objc private func foregroundHandler() {
+        startImageTimer()
+    }
+//       private func setupButtonsBackgrounds()
+//       {
+//
+////           self.loginBtn.backgroundColor = UIColor(red: 10/255, green: 158/255, blue: 93/255, alpha: 1.0)
+////           self.loginBtn.layer.cornerRadius = 8.0
+////           self.singupBtn.backgroundColor = UIColor(red: 128/255, green: 128/255, blue: 128/255, alpha: 1.0)
+////           self.singupBtn.layer.cornerRadius = 8.0
+////           self.exploreBtn.backgroundColor = UIColor(red: 146/255, green: 114/255, blue: 28/255, alpha: 1.0)
+////           self.exploreBtn.layer.cornerRadius = 8.0
+//        self.leftBtn.isHidden = false
+//
+//       }
     @IBAction func rightBtnTapped(_ sender: Any) {
         
         switch rightCount {

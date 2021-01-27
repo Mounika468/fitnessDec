@@ -104,55 +104,92 @@ class FoodDetailsVC: UIViewController {
        
         
         let qtySel : Double = Double(self.qtyTxtField.text ?? "") ?? 0.0
-        if qtySel == 0.0 {
-            self.presentAlertWithTitle(title: "", message: "Please enter valid serving quantity", options: "OK") { (_) in
-                
-            }
-            
-        }else {
-            var cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
-            var fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
-            var carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
-            var prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "hh:mm"
-            
-            let foodItem : NutritionixFoodData = NutritionixFoodData(food_name:  self.selectedFoodDetails?.food_name ?? "", serving_unit:  self.selectedFoodDetails?.serving_unit ?? "", nix_brand_id: self.selectedFoodDetails?.nix_brand_id, brand_name_item_name: self.selectedFoodDetails?.brand_name_item_name, serving_qty: Double(self.qtyTxtField.text ?? "") ?? 0.0, nf_calories: cal, photo: self.selectedFoodDetails?.photo, locale: "", brand_name: self.selectedFoodDetails?.brand_name ?? "", brand_type: self.selectedFoodDetails?.brand_type, region: self.selectedFoodDetails?.region, nix_item_id: self.selectedFoodDetails?.nix_item_id, nix_brand_name: self.selectedFoodDetails?.nix_brand_name, nix_item_name: self.selectedFoodDetails?.nix_item_name, serving_weight_grams: self.selectedFoodDetails?.serving_weight_grams, nf_total_fat: fat, nf_saturated_fat: self.selectedFoodDetails?.nf_saturated_fat ?? 0.0, nf_cholesterol: self.selectedFoodDetails?.nf_sugars ?? 0.0, nf_sodium: self.selectedFoodDetails?.nf_cholesterol ?? 0.0, nf_total_carbohydrate: carbo, nf_dietary_fiber: self.selectedFoodDetails?.nf_dietary_fiber ?? 0.0, nf_sugars: self.selectedFoodDetails?.nf_sugars ?? 0.0, nf_protein: prot, nf_potassium: self.selectedFoodDetails?.nf_potassium, nf_p: self.selectedFoodDetails?.nf_p, alt_measures: self.selectedFoodDetails?.alt_measures, upc: self.selectedFoodDetails?.upc ?? "",time:(dateFormatter.string(from: NSDate() as Date)), createdBy:"trainee",foodStatus:"new")
-           
-           
           
-            
-            let postbody = AddNutritionixFoodPostBody(date: Date.getDateInFormat(format: "dd/MM/yyyy", date: ProgramDetails.programDetails.selectedWODate), trainee_id: UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!, mealType: self.mealType, foodItem: foodItem)
+            if qtySel == 0.0 {
+                self.presentAlertWithTitle(title: "", message: "Please enter valid serving quantity", options: "OK") { (_) in
+                    
+                }
+                
+            }else {
+                if self.isFromSearch == false {
+                    
+                    
+                    let consumedFood = ConsumedFoodItems(refId: self.foodItems?.refId ?? 0, consumedQuantity: Double(self.qtyTxtField.text ?? "") ?? 0.0, consumedTime: self.foodItems?.consumedTime ?? self.foodItems?.time ?? "", foodStatus: WOStatus.complete)
+                    let mealType = self.mealType
+             
+                let postbody = MealUpdatePostBoday(program_id: ProgramDetails.programDetails.programId, date: Date.getDateInFormat(format: "dd/MM/yyyy", date: ProgramDetails.programDetails.selectedWODate), trainee_id: UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!, mealType: mealType, consumedFoodItems: [consumedFood])
+                let jsonEncoder = JSONEncoder()
+                let jsonData = try! jsonEncoder.encode(postbody)
+                
+                GetDietByDateAPI.updateMealPlanAPI(parameters: [:], header: [:], dataParams: jsonData, methodName: "put", successHandler: { [weak self] (diet) in
+                    print("diet is \(diet)")
+                   // self?.dietView.diet = diet
+                                    DispatchQueue.main.async {
+                                      // self?.dietView.reloadDietView()
+                                       LoadingOverlay.shared.hideOverlayView()
+                                       if diet == nil && diet?.mealplan == nil {
+                                           var message = "Food updating failed"
+                                           if messageString.count > 0 {
+                                               message = messageString
+                                           }
+                                         //  self?.dietView.diet = nil
+//                                           self?.dietView.reloadDietView()
+//                                           self?.dietView.displayNoDiet(message: message)
+                                       }else {
+                                        self?.navigationController?.popToRootViewController(animated: true)
+                                       }
+                    
+                                   }
+                }, errorHandler: {  error in
+                        print(" error \(error)")
+                        DispatchQueue.main.async {
+                            LoadingOverlay.shared.hideOverlayView()
+                        }
+                })
+                } else {
+                    var cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
+                    var fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
+                    var carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
+                    var prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "hh:mm"
+                    
+                    let foodItem : NutritionixFoodData = NutritionixFoodData(food_name:  self.selectedFoodDetails?.food_name ?? "", serving_unit:  self.selectedFoodDetails?.serving_unit ?? "", nix_brand_id: self.selectedFoodDetails?.nix_brand_id, brand_name_item_name: self.selectedFoodDetails?.brand_name_item_name, serving_qty: Double(self.qtyTxtField.text ?? "") ?? 0.0, nf_calories: cal, photo: self.selectedFoodDetails?.photo, locale: "", brand_name: self.selectedFoodDetails?.brand_name ?? "", brand_type: self.selectedFoodDetails?.brand_type, region: self.selectedFoodDetails?.region, nix_item_id: self.selectedFoodDetails?.nix_item_id, nix_brand_name: self.selectedFoodDetails?.nix_brand_name, nix_item_name: self.selectedFoodDetails?.nix_item_name, serving_weight_grams: self.selectedFoodDetails?.serving_weight_grams, nf_total_fat: fat, nf_saturated_fat: self.selectedFoodDetails?.nf_saturated_fat ?? 0.0, nf_cholesterol: self.selectedFoodDetails?.nf_sugars ?? 0.0, nf_sodium: self.selectedFoodDetails?.nf_cholesterol ?? 0.0, nf_total_carbohydrate: carbo, nf_dietary_fiber: self.selectedFoodDetails?.nf_dietary_fiber ?? 0.0, nf_sugars: self.selectedFoodDetails?.nf_sugars ?? 0.0, nf_protein: prot, nf_potassium: self.selectedFoodDetails?.nf_potassium, nf_p: self.selectedFoodDetails?.nf_p, alt_measures: self.selectedFoodDetails?.alt_measures, upc: self.selectedFoodDetails?.upc ?? "",time:(dateFormatter.string(from: NSDate() as Date)), createdBy:"trainee",foodStatus:"new")
+                   
+                   
+                  
+                    
+                    let postbody = AddNutritionixFoodPostBody(date: Date.getDateInFormat(format: "dd/MM/yyyy", date: ProgramDetails.programDetails.selectedWODate), trainee_id: UserDefaults.standard.string(forKey: UserDefaultsKeys.subId)!, mealType: self.mealType, foodItem: foodItem)
 
-            let jsonEncoder = JSONEncoder()
-            let jsonData = try! jsonEncoder.encode(postbody)
+                    let jsonEncoder = JSONEncoder()
+                    let jsonData = try! jsonEncoder.encode(postbody)
 
-            GetDietByDateAPI.updateMealPlanAPI(parameters: [:], header: authenticatedHeaders, dataParams: jsonData, methodName: "post", successHandler: { [weak self] (diet) in
-                      print("diet is \(diet)")
-                     // self?.dietView.diet = diet
-                                      DispatchQueue.main.async {
-                                      //   self?.dietView.reloadDietView()
-                                         LoadingOverlay.shared.hideOverlayView()
-                                         if diet == nil && diet?.mealplan == nil {
-                                             var message = "No data available for the selected date"
-                                             if messageString.count > 0 {
-                                                 message = messageString
+                    GetDietByDateAPI.updateMealPlanAPI(parameters: [:], header: authenticatedHeaders, dataParams: jsonData, methodName: "post", successHandler: { [weak self] (diet) in
+                              print("diet is \(diet)")
+                             // self?.dietView.diet = diet
+                                              DispatchQueue.main.async {
+                                              //   self?.dietView.reloadDietView()
+                                                 LoadingOverlay.shared.hideOverlayView()
+                                                 if diet == nil && diet?.mealplan == nil {
+                                                     var message = "No data available for the selected date"
+                                                     if messageString.count > 0 {
+                                                         message = messageString
+                                                     }
+
+                                                 }else {
+                                                    self?.navigationController?.popToRootViewController(animated: true)
+                                                }
+
                                              }
-
-                                         }else {
-                                            self?.navigationController?.popToRootViewController(animated: true)
-                                        }
-
-                                     }
-                  }, errorHandler: {  error in
-                          print(" error \(error)")
-                          DispatchQueue.main.async {
-                              LoadingOverlay.shared.hideOverlayView()
-                          }
-                  })
-        }
-        
-        
+                          }, errorHandler: {  error in
+                                  print(" error \(error)")
+                                  DispatchQueue.main.async {
+                                      LoadingOverlay.shared.hideOverlayView()
+                                  }
+                          })
+                }
+               
+            }
     }
    
     func setUpView() {
@@ -172,8 +209,8 @@ class FoodDetailsVC: UIViewController {
 
             
         }else {
-            navigationView.saveBtn.isHidden = true
-            self.qtyTxtField.isEnabled = false
+            navigationView.saveBtn.isHidden = false
+            self.qtyTxtField.isEnabled = true
             if  self.foodItems?.photo != nil {
                 self.imgView.loadImage(url: URL(string: (foodItems!.photo?.thumb)!)!)
              }
@@ -541,17 +578,50 @@ extension FoodDetailsVC: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("text qty changed Details")
         if self.qtyTxtField.text?.count ?? 0 > 0  {
-            let qtySel : Double = Double(self.qtyTxtField.text ?? "") ?? 0.0
-            let cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
-            let fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
-            let carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
-            let prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
-                self.caloreLbl.text = String(format: "%.2f kcal", cal)
-                self.calValLbl.text = String(format: "%.2f kcal", cal)
-                self.fatLbl.text = String(format: "Fat %.2f g", fat)
-                self.carboLbl.text = String(format: "Carbohydrate %.2f g", carbo)
-                self.proteinLbl.text = String(format: "Protein %.2f g", prot )
-            self.qtyInGrms.text = String(format:"%.0f",(self.selectedFoodDetails!.serving_weight_grams ?? 0) / self.selectedFoodDetails!.serving_qty * qtySel)
+            if self.isFromSearch == true {
+                let qtySel : Double = Double(self.qtyTxtField.text ?? "") ?? 0.0
+                let cal = self.selectedFoodDetails!.nf_calories / self.selectedFoodDetails!.serving_qty * qtySel
+                let fat = self.selectedFoodDetails!.nf_total_fat! / self.selectedFoodDetails!.serving_qty * qtySel
+                let carbo = self.selectedFoodDetails!.nf_total_carbohydrate! / self.selectedFoodDetails!.serving_qty * qtySel
+                let prot = self.selectedFoodDetails!.nf_protein! / self.selectedFoodDetails!.serving_qty * qtySel
+                    self.caloreLbl.text = String(format: "%.2f kcal", cal)
+                    self.calValLbl.text = String(format: "%.2f kcal", cal)
+                    self.fatLbl.text = String(format: "Fat %.2f g", fat)
+                    self.carboLbl.text = String(format: "Carbohydrate %.2f g", carbo)
+                    self.proteinLbl.text = String(format: "Protein %.2f g", prot )
+                self.qtyInGrms.text = String(format:"%.0f",(self.selectedFoodDetails!.serving_weight_grams ?? 0) / self.selectedFoodDetails!.serving_qty * qtySel)
+            }else {
+                
+                let qtySel : Float = Float(self.qtyTxtField.text ?? "") ?? 0.0
+                if self.foodItems?.foodStatus == WOStatus.complete {
+                    let cal = self.foodItems!.nf_calories!.consumed / (self.foodItems!.serving_qty?.consumed)! * qtySel
+                    let fat = self.foodItems!.nf_total_fat!.consumed / (self.foodItems!.serving_qty?.consumed)! * qtySel
+                    let carbo = self.foodItems!.nf_total_carbohydrate!.consumed / (self.foodItems!.serving_qty?.consumed)! * qtySel
+                    let prot = self.foodItems!.nf_protein!.consumed / (self.foodItems!.serving_qty?.consumed)! * qtySel
+                        self.caloreLbl.text = String(format: "%.2f kcal", cal)
+                        self.calValLbl.text = String(format: "%.2f kcal", cal)
+                        self.fatLbl.text = String(format: "Fat %.2f g", fat)
+                        self.carboLbl.text = String(format: "Carbohydrate %.2f g", carbo)
+                        self.proteinLbl.text = String(format: "Protein %.2f g", prot )
+                    self.qtyInGrms.text = String(format:"%.0f",(self.foodItems!.serving_weight_grams?.consumed ?? 0) / (self.foodItems!.serving_qty?.consumed)! * qtySel)
+                    
+                }else {
+                    let cal = self.foodItems!.nf_calories!.recommended / (self.foodItems!.serving_qty?.recommended)! * qtySel
+                    let fat = self.foodItems!.nf_total_fat!.recommended / (self.foodItems!.serving_qty?.recommended)! * qtySel
+                    let carbo = self.foodItems!.nf_total_carbohydrate!.recommended / (self.foodItems!.serving_qty?.recommended)! * qtySel
+                    let prot = self.foodItems!.nf_protein!.recommended / (self.foodItems!.serving_qty?.recommended)! * qtySel
+                        self.caloreLbl.text = String(format: "%.2f kcal", cal)
+                        self.calValLbl.text = String(format: "%.2f kcal", cal)
+                        self.fatLbl.text = String(format: "Fat %.2f g", fat)
+                        self.carboLbl.text = String(format: "Carbohydrate %.2f g", carbo)
+                        self.proteinLbl.text = String(format: "Protein %.2f g", prot )
+                    self.qtyInGrms.text = String(format:"%.0f",(self.foodItems!.serving_weight_grams?.recommended ?? 0) / (self.foodItems!.serving_qty?.recommended)! * qtySel)
+                    
+                }
+                
+               
+            }
+            
         }
     }
 }
@@ -560,7 +630,7 @@ extension FoodDetailsVC : FoodQuantityChangedDelegate ,UIViewControllerTransitio
 //        DispatchQueue.main.async {
 //        self.grmsBtn.setTitle(qty, for: .normal)
 //        }
-        let query = "\(measures.measure) " + " \(measures.qty)" + self.commonfoodItem!.food_name
+        let query = "\(measures.measure) " + "\(measures.qty) " + self.commonfoodItem!.food_name
         self.getCommonFoodDetails(query: query) { (foodDetails) in
             
             DispatchQueue.main.async {

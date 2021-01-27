@@ -117,7 +117,7 @@ class BMIBMRViewController: UIViewController {
         let BMIBMRVal = TraineeDetails.traineeDetails?.bmi_bmr
         let targetWeight = (TraineeDetails.traineeDetails?.targetWeight) ?? 0
         ageValLbl.text =  "\(TraineeDetails.traineeDetails?.age ?? 0)"
-        heightLbl.text = String(format: "%.0f", (TraineeDetails.traineeDetails?.trainee_height?.height ?? 0))
+        heightLbl.text = String(format: "%.2f", (TraineeDetails.traineeDetails?.trainee_height?.height ?? 0))
         if TraineeDetails.traineeDetails?.trainee_height?.metric == "cm" {
             self.cmLbl.setTitleColor(AppColours.textGreen, for: .normal)
             self.ftLbl.setTitleColor(.white, for: .normal)

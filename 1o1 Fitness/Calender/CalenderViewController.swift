@@ -438,10 +438,11 @@ class CalenderViewController: UIViewController {
         }
         else
         {
-                self.callView.isHidden = false
+               
                 self.getCallDetailsForDate(date:self.slectedDate, successHandler:  { (scheduleArr) in
                     
                     DispatchQueue.main.async {
+                        self.callView.isHidden = false
                         LoadingOverlay.shared.hideOverlayView()
                         if scheduleArr?.count ?? 0 > 0 {
                             self.callScheduleData = scheduleArr![0]
@@ -454,6 +455,7 @@ class CalenderViewController: UIViewController {
                     }
                 }) { (message) in
                     DispatchQueue.main.async {
+                        self.callView.isHidden = false
                          LoadingOverlay.shared.hideOverlayView()
                         self.displayCallView(hidden: true)
                                                self.callsNoDataLbl.text = messageString
@@ -1402,13 +1404,27 @@ extension CalenderViewController:DietSelectionDelegate {
                 }
         })
     }
-    func foodDetailsSelected(foodItems:NutritionixFoodItems) {
+    func foodDetailsSelected(foodItems:NutritionixFoodItems,dietSelection: DietSelection) {
         
         let storyboard = UIStoryboard(name: "FoodDetailsVC", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "FoodDetailsVC") as! FoodDetailsVC
         controller.xBarHeight = self.xBarHeight
         controller.foodItems = foodItems
         controller.isFromSearch = false
+        var mealType = "breakfast"
+               switch dietSelection {
+               case .breakFast:
+                   mealType = "breakfast"
+                   case .lunch:
+                              mealType = "lunch"
+                   case .dinner:
+                   mealType = "dinner"
+                   case .snack1:
+                             mealType = "snacks"
+               default:
+                   mealType = "breakfast"
+               }
+        controller.mealType = mealType
         self.navigationController?.pushViewController(controller, animated: true)
     }
     func timePickerSelected(index:Int, dietSelection: DietSelection, foodItems:NutritionixFoodItems, quantity:Double) {

@@ -234,9 +234,16 @@ class ConfirmSignUpViewController: UIViewController {
              DispatchQueue.main.async {
                            if message.count > 0 {
                                self.presentAlertWithTitle(title: "", message: message, options: "OK") { (option) in
+                                DispatchQueue.main.async {
+                                let storyboard = UIStoryboard(name: "LoginViewController", bundle: nil)
+                                let controller = storyboard.instantiateViewController(withIdentifier: "loginVC")
+                                self.navigationController?.pushViewController(controller, animated: true)
+                                }
                                }
                            }else {
+                            DispatchQueue.main.async {
                                self.navigateToProfile(isNormalLogin: true)
+                            }
                                
                            }
                        }

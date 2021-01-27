@@ -12,7 +12,7 @@ protocol DietSelectionDelegate {
     func selectedDietOption()
     func addFoodSelected(dietSelected:DietSelection)
     func completeFoodItem(index:Int, dietSelection: DietSelection, foodItems:NutritionixFoodItems, quantity:Double)
-    func foodDetailsSelected(foodItems:NutritionixFoodItems)
+    func foodDetailsSelected(foodItems:NutritionixFoodItems, dietSelection:DietSelection)
     func setParentViewHeight(height: CGFloat)
     func timePickerSelected(index:Int, dietSelection: DietSelection, foodItems:NutritionixFoodItems, quantity:Double)
     func deleteFoodItem(dietSelection: DietSelection, foodItems:NutritionixFoodItems)
@@ -587,7 +587,7 @@ extension DietViewL: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let foodItem = self.foodItemsArr![indexPath.row]
-        self.dietviewDelegate?.foodDetailsSelected(foodItems:foodItem)
+        self.dietviewDelegate?.foodDetailsSelected(foodItems:foodItem, dietSelection: self.dietSelection)
        }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -690,6 +690,14 @@ extension DietViewL: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        let delete = UIContextualAction(style: .normal, title: "") {
+                                action, sourceView, completionHandler in
+                              let actionPerformed = self.deleteAction(action: action, sourceView: sourceView, indexPath: indexPath)
+                                completionHandler(actionPerformed)
+                            }
+        delete.image = UIImage(named: "dietDelete")
+        delete.backgroundColor =  UIColor.black
+        
         let add = UIContextualAction(style: .normal, title: "") {
                                 action, sourceView, completionHandler in
                               let actionPerformed = self.addAction(action: action, sourceView: sourceView, indexPath: indexPath)
@@ -714,13 +722,18 @@ extension DietViewL: UITableViewDelegate,UITableViewDataSource {
         complete.image = UIImage(named: "dietgComplete")
                                         complete.backgroundColor =  UIColor.black
         
-        let config = UISwipeActionsConfiguration(actions: [complete,add,minus])
+        let config = UISwipeActionsConfiguration(actions: [delete,complete,add,minus])
                             config.performsFirstActionWithFullSwipe = false
                       let cell:UITableViewCell = (tableView.cellForRow(at: IndexPath(row: indexPath.row, section: 0)))!
                       cell.backgroundColor = UIColor.black
                       //action.backgroundColor = UIColor.green
                             return config
         
+    }
+    func deleteAction(action: UIContextualAction, sourceView: UIView,indexPath: IndexPath) -> Bool {
+        let foodItem = self.foodItemsArr![indexPath.row]
+        self.dietviewDelegate?.deleteFoodItem(dietSelection: self.dietSelection, foodItems: foodItem)
+         return true
     }
 
     func completeAction(action: UIContextualAction, sourceView: UIView,indexPath: IndexPath) -> Bool {
@@ -758,7 +771,7 @@ extension DietViewL: UITableViewDelegate,UITableViewDataSource {
                   //  editedQuantity = editedQuantity - Double(foodItem.serving_qty?.consumed ?? 0.0)
                     editedQuantity = editedQuantity - 0.5
                 }
-                if editedQuantity == 0 {
+                if editedQuantity == 0 || editedQuantity < 0.5 {
                     self.dietviewDelegate?.deleteFoodItem(dietSelection: self.dietSelection, foodItems: foodItem)
                 }
             }else {
@@ -794,7 +807,7 @@ extension DietViewL: UITableViewDelegate,UITableViewDataSource {
                 if editedQuantity != 0 && editedQuantity >=  0.5 {
                     editedQuantity = editedQuantity - 0.5
                 }
-                if editedQuantity == 0 {
+                if editedQuantity == 0 || editedQuantity < 0.5 {
                     self.dietviewDelegate?.deleteFoodItem(dietSelection: self.dietSelection, foodItems: foodItem)
                 }
             }else {
